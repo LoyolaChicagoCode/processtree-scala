@@ -2,31 +2,31 @@ package edu.luc.etl.osdi.processtree
 
 import java.io.InputStream
 import scala.collection.mutable._
-import scala.sys.process.{Process, ProcessIO}
+import scala.math.max
 
 object Main {
+  
+  case class Proc(pid: Int, ppid: Int, cmd: String)
 
-  def main(args : Array[String]) = {
-    val pb = Process("ps -ef")
-    val pio = new ProcessIO(_ => (), printTreeFromStream, _ => ())
-    pb.run(pio)
+  val regex = """\S+""".r
+  
+  def analyzeHeader(header: String) = {
+    val tokens = regex.findAllIn(header).toList
+    (tokens.indexOf("PID"), tokens.indexOf("PPID"), max(tokens.indexOf("CMD"), tokens.indexOf("COMMAND")))
   }
-  
-  case class Proc(uid: String, pid: Int, ppid: Int, c: Int, stime: String, tty: String, time: String, cmd: String)
-  
-  object Proc {
-	implicit def fromString(s: String) = {
-  	  val ProcMatch = """(\S+)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\S+)\s+(\S+)\s+(\d\d:\d\d:\d\d)\s+(\S.*)""".r
-	  val ProcMatch(uid, pid, ppid, c, stime, tty, time, cmd) = s
-	  Proc(uid, pid.toInt, ppid.toInt, c.toInt, stime, tty, time, cmd)
-	}    
+
+  def parseLine(line: String, indices: (Int, Int, Int)) = {
+    val tokens = regex.findAllIn(line).toList
+    Proc(tokens(indices._1).toInt, tokens(indices._2).toInt, tokens.drop(indices._3).mkString(" "))
   }
-  
-  def printTreeFromStream(in: InputStream) { 
-    val lines = scala.io.Source.fromInputStream(in).getLines.drop(1)
-    val pmap = lines.map(Proc.fromString).map(p => (p.pid, p)).toMap[Int, Proc]
+
+  def main(args: Array[String]) = {
+    val lines = scala.io.Source.fromInputStream(System.in).getLines
+    val header = lines.next()
+    val indices = analyzeHeader(header)
+
+    val pmap = lines.map(l => { val p = parseLine(l, indices) ; (p.pid, p) }).toMap[Int, Proc]
     val tmap = new HashMap[Int, Set[Int]] with MultiMap[Int, Int]
-
     pmap.values.foreach(p => tmap.addBinding(p.ppid, p.pid))
 
     def printTree(l: Int)(i: Int) {
@@ -35,6 +35,6 @@ object Main {
         tmap(i).foreach(printTree(l + 1))
     }
 	
-    printTree(0)(1)
+    tmap(0).foreach(printTree(0)(_))
   }
 }
