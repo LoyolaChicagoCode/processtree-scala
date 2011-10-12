@@ -30,7 +30,8 @@ object Main {
     pmap.values.foreach(p => tmap.addBinding(p.ppid, p.pid))
 
     def printTree(l: Int)(i: Int) {
-      println("  " * l + pmap(i))
+      val p = pmap(i)
+      printf("%s%d: %s\n", " " * l, p.pid, p.cmd)
       if (tmap.contains(i))
         tmap(i).foreach(printTree(l + 1))
     }
