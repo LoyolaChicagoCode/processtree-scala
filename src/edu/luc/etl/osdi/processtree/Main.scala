@@ -2,30 +2,39 @@ package edu.luc.etl.osdi.processtree
 
 import java.io.InputStream
 import scala.collection.mutable._
-import scala.math.max
+import scala.math.{max, min}
 
 object Main {
   
   case class Proc(pid: Int, ppid: Int, cmd: String)
 
-  val regex = """\S+""".r
-  
-  def analyzeHeader(header: String) = {
-    val tokens = regex.findAllIn(header).toList
-    (tokens.indexOf("PID"), tokens.indexOf("PPID"), max(tokens.indexOf("CMD"), tokens.indexOf("COMMAND")))
-  }
-
-  def parseLine(line: String, indices: (Int, Int, Int)) = {
-    val tokens = regex.findAllIn(line).toList
-    Proc(tokens(indices._1).toInt, tokens(indices._2).toInt, tokens.drop(indices._3).mkString(" "))
+  def procFromLine(header: String) = {
+    val tokens = "\\S+".r.findAllIn(header).toList
+    val List(iPid, iPpid, iCmd, iCommand) = 
+      List("PID", "PPID", "CMD", "COMMAND").map(tokens.indexOf(_))
+    val (iFirst, iSecond, iThird) = 
+      (min(iPid, iPpid), max(iPid, iPpid), max(iCmd, iCommand))
+    require (iPid >= 0)
+    require (iPpid >= 0)
+    require (iThird > iSecond)
+    require (min(iCmd, iCommand) == -1)
+    val buf = new StringBuilder
+    buf ++= """\S+\s+""" * iFirst ; buf ++= """(\S+)\s+"""
+    buf ++= """\S+\s+""" * (iSecond - iFirst - 1) ; buf ++= """(\S+)\s+"""
+    buf ++= """\S+\s+""" * (iThird - iSecond - 1) ; buf ++= """(\S.*)"""
+    val regex = buf.r
+    (line: String) => {
+      val regex(first, second, cmd) = line
+      val (pid, ppid) = if (iPid < iPpid) (first, second) else (second, first)
+      Proc(pid.toInt, ppid.toInt, cmd)
+    }
   }
 
   def main(args: Array[String]) = {
     val lines = scala.io.Source.fromInputStream(System.in).getLines
-    val header = lines.next()
-    val indices = analyzeHeader(header)
+    val toProc = procFromLine(lines.next())
 
-    val pmap = lines.map(l => { val p = parseLine(l, indices) ; (p.pid, p) }).toMap[Int, Proc]
+    val pmap = lines.map(l => { val p = toProc(l) ; (p.pid, p) }).toMap[Int, Proc]
     val tmap = new HashMap[Int, Set[Int]] with MultiMap[Int, Int]
     pmap.values.foreach(p => tmap.addBinding(p.ppid, p.pid))
 
