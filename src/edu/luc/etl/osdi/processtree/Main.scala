@@ -22,10 +22,11 @@ object Main {
     buf ++= """\S+\s+""" * iFirst ; buf ++= """(\S+)\s+"""
     buf ++= """\S+\s+""" * (iSecond - iFirst - 1) ; buf ++= """(\S+)\s+"""
     buf ++= """\S+\s+""" * (iThird - iSecond - 1) ; buf ++= """(\S.*)"""
+    val pidFirst = iPid < iPpid
     val regex = buf.r
     (line: String) => {
       val regex(first, second, cmd) = line
-      val (pid, ppid) = if (iPid < iPpid) (first, second) else (second, first)
+      val (pid, ppid) = if (pidFirst) (first, second) else (second, first)
       Proc(pid.toInt, ppid.toInt, cmd)
     }
   }
