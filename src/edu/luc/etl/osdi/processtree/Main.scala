@@ -16,7 +16,7 @@ object Main {
       (min(iPid, iPpid), max(iPid, iPpid), max(iCmd, iCommand))
     require (iPid >= 0, "required header field PID missing!")
     require (iPpid >= 0, "required header field PPID missing!")
-    require (iThird > iSecond, "required header field CMD missing or not last!")
+    require (iThird > iSecond, "required header field CMD or COMMAND missing or not last!")
     val buf = new StringBuilder
     buf ++= """\S+\s+""" * iFirst ; buf ++= """(\S+)\s+"""
     buf ++= """\S+\s+""" * (iSecond - iFirst - 1) ; buf ++= """(\S+)\s+"""
