@@ -9,24 +9,16 @@ object Main {
   case class Proc(pid: Int, ppid: Int, cmd: String)
 
   def procFromLine(header: String) = {
-    val tokens = "\\S+".r.findAllIn(header).toList
-    val List(iPid, iPpid, iCmd, iCommand) = 
-      List("PID", "PPID", "CMD", "COMMAND").map(tokens.indexOf(_))
-    val (iFirst, iSecond, iThird) = 
-      (min(iPid, iPpid), max(iPid, iPpid), max(iCmd, iCommand))
+    val cols = header.trim.split("\\s+")
+    val iPid = cols indexOf "PID"
+    val iPpid = cols indexOf "PPID"
+    val iCmd = max(cols indexOf "CMD", cols indexOf "COMMAND")
     require (iPid >= 0, "required header field PID missing!")
     require (iPpid >= 0, "required header field PPID missing!")
-    require (iThird > iSecond, "required header field CMD or COMMAND missing or not last!")
-    val buf = new StringBuilder
-    buf ++= """\S+\s+""" * iFirst ; buf ++= """(\S+)\s+"""
-    buf ++= """\S+\s+""" * (iSecond - iFirst - 1) ; buf ++= """(\S+)\s+"""
-    buf ++= """\S+\s+""" * (iThird - iSecond - 1) ; buf ++= """(\S.*)"""
-    val pidFirst = iPid < iPpid
-    val regex = buf.r
+    require (iCmd > max(iPid, iPpid), "required header field CMD or COMMAND missing or not last!")
     (line: String) => {
-      val regex(first, second, cmd) = line
-      val (pid, ppid) = if (pidFirst) (first, second) else (second, first)
-      Proc(pid.toInt, ppid.toInt, cmd)
+      val words = line.trim.split("\\s+")
+      Proc(words(iPid).toInt, words(iPpid).toInt, words.drop(iCmd).mkString(" "))
     }
   }
 
