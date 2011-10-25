@@ -18,7 +18,7 @@ object Main {
     require (iCmd > max(iPid, iPpid), "required header field CMD or COMMAND missing or not last!")
     (line: String) => {
 //      val words = line.substring(0, iCmd).trim.split("\\s+")
-      val sTok = new java.util.StringTokenizer(line.substring(0, iCmd))
+      val sTok = new java.util.StringTokenizer(line)
       val words = (0 to max(iPid, iPpid)).map(_ => sTok.nextToken())
       Proc(words(iPid).toInt, words(iPpid).toInt, line.substring(iCmd))
     }
