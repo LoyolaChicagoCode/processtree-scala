@@ -12,13 +12,13 @@ object Main {
     val cols = header.trim.split("\\s+")
     val iPid = cols indexOf "PID"
     val iPpid = cols indexOf "PPID"
-    val iCmd = max(cols indexOf "CMD", cols indexOf "COMMAND")
+    val iCmd = max(header indexOf "CMD", header indexOf "COMMAND")
     require (iPid >= 0, "required header field PID missing!")
     require (iPpid >= 0, "required header field PPID missing!")
     require (iCmd > max(iPid, iPpid), "required header field CMD or COMMAND missing or not last!")
     (line: String) => {
       val words = line.trim.split("\\s+")
-      Proc(words(iPid).toInt, words(iPpid).toInt, words.drop(iCmd).mkString(" "))
+      Proc(words(iPid).toInt, words(iPpid).toInt, line.substring(iCmd))
     }
   }
 
