@@ -1,6 +1,6 @@
 package edu.luc.etl.osdi.processtree.scala
 
-import scala.collection.mutable.{HashMap, MultiMap, Set}
+import scala.collection.mutable.{ArrayBuffer, Buffer, HashMap, MultiMap, Set}
 import scala.math.{max, min}
 import scala.collection.JavaConversions.enumerationAsScalaIterator
 import java.io.{BufferedReader, InputStreamReader, BufferedWriter, OutputStreamWriter}
@@ -8,6 +8,7 @@ import java.io.{BufferedReader, InputStreamReader, BufferedWriter, OutputStreamW
 object Main {
 
   val IO_BUF_SIZE = 8192
+  val CHILD_LIST_SIZE = 16
 
   case class Proc(pid: Int, ppid: Int, cmd: String)
 
@@ -32,17 +33,22 @@ object Main {
     val toProc = procFromLine(in.readLine())
 
     val pmap = new HashMap[Int, Proc]
-    val tmap = new HashMap[Int, Set[Int]] with MultiMap[Int, Int]
+    val tmap = new HashMap[Int, Buffer[Int]] // with MultiMap[Int, Int]
+
+    val start = System.currentTimeMillis
 
     var line = in.readLine()
     while (line != null) {
       val p = toProc(line)
-      pmap.put(p.pid, p)
-      tmap.addBinding(p.ppid, p.pid)
+      pmap += ((p.pid, p))
+//      tmap.addBinding(p.ppid, p.pid)
+      if (! tmap.contains(p.ppid))
+        tmap += ((p.ppid, new ArrayBuffer[Int](CHILD_LIST_SIZE)))
+      tmap(p.ppid) += p.pid
       line = in.readLine()
      }
 
-    def printTree(l: Int)(i: Int) {
+    def printTree(l: Int, i: Int) {
       val p = pmap(i)
       out.append(" " * l)
       out.append(p.pid.toString)
@@ -50,10 +56,12 @@ object Main {
 	  out.append(p.cmd)
 	  out.newLine();
       if (tmap.contains(i))
-        tmap(i).foreach(printTree(l + 1))
+        tmap(i).foreach(printTree(l + 1, _))
     }
 
-    tmap(0).foreach(printTree(0)(_))
+    tmap(0).foreach(printTree(0, _))
     out.flush()
+
+    println(System.currentTimeMillis - start + " ms");
   }
 }
