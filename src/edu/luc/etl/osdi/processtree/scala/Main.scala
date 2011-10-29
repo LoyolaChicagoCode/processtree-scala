@@ -50,8 +50,9 @@ object Main {
 
     def printTree(l: Int, i: Int) {
       val p = pmap(i)
-      out.append(" " * l)
-      out.append(p.pid.toString)
+      for (i <- 0 until l)
+    	  out.append(' ')
+      out.append(i.toString)
 	  out.append(": ")
 	  out.append(p.cmd)
 	  out.newLine();
