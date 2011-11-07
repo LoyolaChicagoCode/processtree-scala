@@ -26,24 +26,21 @@ object Main {
   }
 
   def main(args: Array[String]) = {
+    val lines = scala.io.Source.fromInputStream(System.in).getLines
     val out = new BufferedWriter(new OutputStreamWriter(System.out), IO_BUF_SIZE);
-    val in = new BufferedReader(new InputStreamReader(System.in), IO_BUF_SIZE)
-    val parse = parseLine(in.readLine())
+    val parse = parseLine(lines.next())
 
     val pmap = new HashMap[Int, String]
-    val tmap = new HashMap[Int, Buffer[Int]] // with MultiMap[Int, Int]
+    val tmap = new HashMap[Int, Buffer[Int]]
 
     val start = System.currentTimeMillis
 
-    var line = in.readLine()
-    while (line != null) {
+    for (line <- lines) {
       val (pid, ppid, cmd) = parse(line)
       pmap += ((pid, cmd))
-//      tmap.addBinding(p.ppid, p.pid)
       if (! tmap.contains(ppid))
         tmap += ((ppid, new ArrayBuffer[Int](CHILD_LIST_SIZE)))
       tmap(ppid) += pid
-      line = in.readLine()
      }
 
     def printTree(l: Int, i: Int) {
