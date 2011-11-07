@@ -5,7 +5,7 @@ import scala.math.{max, min}
 import scala.collection.JavaConversions.enumerationAsScalaIterator
 import java.io.{BufferedReader, InputStreamReader, BufferedWriter, OutputStreamWriter}
 
-object Main {
+object MainMutable {
 
   val IO_BUF_SIZE = 8192
   val CHILD_LIST_SIZE = 16
