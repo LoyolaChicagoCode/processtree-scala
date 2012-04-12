@@ -5,7 +5,7 @@ import scala.math.{max, min}
 import scala.collection.JavaConversions.enumerationAsScalaIterator
 import java.io.{BufferedReader, InputStreamReader, BufferedWriter, OutputStreamWriter}
 
-object MainMutable {
+object MainMutableNew {
 
   val IO_BUF_SIZE = 8192
   val CHILD_LIST_SIZE = 16
@@ -35,7 +35,7 @@ object MainMutable {
 
     val start = System.currentTimeMillis
 
-    for (line <- lines) {
+    lines foreach { line =>
       val (pid, ppid, cmd) = parse(line)
       pmap += ((pid, cmd))
       if (! tmap.contains(ppid))
@@ -44,17 +44,16 @@ object MainMutable {
      }
 
     def printTree(l: Int, i: Int) {
-      for (i <- 0 until l)
-    	  out.append(' ')
+       (0 until l) foreach { _ => out.append(' ') }
       out.append(i.toString)
 	  out.append(": ")
 	  out.append(pmap(i))
 	  out.newLine();
       if (tmap.contains(i))
-        tmap(i).foreach(printTree(l + 1, _))
+        tmap(i) foreach { printTree(l + 1, _) }
     }
 
-    tmap(0).foreach(printTree(0, _))
+    tmap(0) foreach { printTree(0, _) }
     out.flush()
 
     println(System.currentTimeMillis - start + " ms");
