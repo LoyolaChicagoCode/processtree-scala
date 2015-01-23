@@ -4,7 +4,6 @@ package immutable
 import common._
 
 object Main extends App {
-
   val lines = scala.io.Source.stdin.getLines
   val header = lines.next()
   val parse = IO.parseLine(header)
@@ -19,7 +18,6 @@ object Main extends App {
 }
 
 object Immutable extends TreeBuilder {
-
   def buildTree(processes: Iterator[(Int, Int, String)]): Map[Int, Seq[(Int, Int, String)]] =
     processes.toSeq groupBy { _._2 }
 }
