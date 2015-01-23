@@ -7,7 +7,7 @@ import scala.collection.JavaConversions.enumerationAsScalaIterator
 import scala.collection.mutable.{ArrayBuffer, Buffer, HashMap}
 import scala.math.max
 
-object MainMutable {
+object Main {
 
   val IO_BUF_SIZE = 8192
   val CHILD_LIST_SIZE = 16
@@ -45,19 +45,19 @@ object MainMutable {
       tmap(ppid) += pid
     }
 
+    println(System.currentTimeMillis - start + " ms");
+
     def printTree(l: Int, i: Int) {
-       (0 until l) foreach { _ => out.append(' ') }
+      (1 to l) foreach { _ => out.append(' ') }
       out.append(i.toString)
-	  out.append(": ")
-	  out.append(pmap(i))
-	  out.newLine();
+      out.append(": ")
+      out.append(pmap(i))
+      out.newLine();
       if (tmap.contains(i))
         tmap(i) foreach { printTree(l + 1, _) }
     }
 
     tmap(0) foreach { printTree(0, _) }
     out.flush()
-
-    println(System.currentTimeMillis - start + " ms");
   }
 }

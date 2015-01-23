@@ -1,5 +1,5 @@
 package edu.luc.etl.osdi.processtree.scala
-package immutable
+package common
 
 import java.io.{BufferedWriter, OutputStreamWriter}
 
@@ -28,7 +28,7 @@ object IO {
   val out = new BufferedWriter(new OutputStreamWriter(System.out), IO_BUF_SIZE)
 
   def printTree(processTree: Map[Int, Seq[(Int, Int, String)]], pid: Int = 0, indent: Int = 0) {
-    for (children <- processTree.get(pid); (cpid, ppid, cmd) <- children) {
+    for (children <- processTree.get(pid); (cpid, _, cmd) <- children) {
       for (_ <- 1 to indent) out.append(' ')
       out.append(cpid.toString)
       out.append(": ")
