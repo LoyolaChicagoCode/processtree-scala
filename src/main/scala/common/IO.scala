@@ -27,7 +27,12 @@ object IO {
 
   val out = new BufferedWriter(new OutputStreamWriter(System.out), IO_BUF_SIZE)
 
-  def printTree(processTree: Map[Int, Seq[(Int, Int, String)]], pid: Int = 0, indent: Int = 0) {
+  def printTree(processTree: Map[Int, Seq[(Int, Int, String)]]): Unit = {
+    printTree(processTree, 0, 0)
+    out.flush()
+  }
+
+  def printTree(processTree: Map[Int, Seq[(Int, Int, String)]], pid: Int, indent: Int) {
     for (children <- processTree.get(pid); (cpid, _, cmd) <- children) {
       for (_ <- 1 to indent) out.append(' ')
       out.append(cpid.toString)
@@ -35,9 +40,6 @@ object IO {
       out.append(cmd)
       out.newLine()
       printTree(processTree, cpid, indent + 1)
-    }
-    if (indent == 0) {
-      out.flush()
     }
   }
 }
