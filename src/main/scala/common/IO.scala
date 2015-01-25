@@ -36,6 +36,8 @@ object IO {
       out.newLine()
       printTree(processTree, cpid, indent + 1)
     }
-    out.flush()
+    if (indent == 0) {
+      out.flush()
+    }
   }
 }
