@@ -8,7 +8,7 @@ import scala.math.max
 
 object IO {
 
-  def parseLine(header: String) = {
+  def parseLine(header: String): (String) => (Int, Int, String) = {
     val cols = new java.util.StringTokenizer(header).toList
     val iPid = cols indexOf "PID"
     val iPpid = cols indexOf "PPID"
@@ -32,7 +32,7 @@ object IO {
     out.flush()
   }
 
-  def printTree(processTree: Map[Int, Seq[(Int, Int, String)]], pid: Int, indent: Int) {
+  def printTree(processTree: Map[Int, Seq[(Int, Int, String)]], pid: Int, indent: Int): Unit = {
     for (children <- processTree.get(pid); (cpid, _, cmd) <- children) {
       for (_ <- 1 to indent) out.append(' ')
       out.append(cpid.toString)

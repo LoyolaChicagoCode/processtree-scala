@@ -18,6 +18,7 @@ object Main extends App {
 }
 
 object Immutable extends TreeBuilder {
-  def buildTree(processes: Iterator[(Int, Int, String)]): Map[Int, Seq[(Int, Int, String)]] =
+  override def buildTree(processes: Iterator[(Int, Int, String)]):
+  Map[Int, Seq[(Int, Int, String)]] =
     processes.toSeq groupBy { _._2 }
 }

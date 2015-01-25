@@ -22,8 +22,8 @@ object Mutable extends TreeBuilder {
 
   val CHILD_LIST_SIZE = 16
 
-  override def buildTree(processes: Iterator[(Int, Int, String)]): 
-    Map[Int, scala.Seq[(Int, Int, String)]] = {
+  override def buildTree(processes: Iterator[(Int, Int, String)]):
+  Map[Int, scala.Seq[(Int, Int, String)]] = {
     val treeMap = new HashMap[Int, Buffer[(Int, Int, String)]]
     while (processes.hasNext) {
       val tuple = processes.next()
