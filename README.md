@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/LoyolaChicagoCode/processtree-scala.svg?branch=master)](https://travis-ci.org/LoyolaChicagoCode/processtree-scala)
-[![Coverage Status](https://coveralls.io/repos/LoyolaChicagoCode/processtree-scala/badge.png?branch=master)](https://coveralls.io/r/LoyolaChicagoCode/processtree-scala?branch=master)
+[![Coverage Status](https://coveralls.io/repos/LoyolaChicagoCode/processtree-scala/badge.svg?branch=master)](https://coveralls.io/r/LoyolaChicagoCode/processtree-scala?branch=master)
 
 #Learning Objectives
 
