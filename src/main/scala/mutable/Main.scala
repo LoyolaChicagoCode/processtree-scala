@@ -1,25 +1,11 @@
 package edu.luc.etl.osdi.processtree.scala
 package mutable
 
-import common._
-import IO._
+object Main extends common.Main with Mutable
 
-import scala.collection.mutable.{ArrayBuffer, Buffer, HashMap}
+trait Mutable extends common.TreeBuilder {
 
-object Main extends App {
-  val lines = scala.io.Source.stdin.getLines
-  val parse = IO.parseLine(lines.next())
-  val processes = lines map parse
-  
-  val start = System.currentTimeMillis
-  val processTree = Mutable.buildTree(processes)
-  val total = System.currentTimeMillis - start
-
-  printTree(processTree)
-  println("processing time: " + total + " ms")
-}
-
-object Mutable extends TreeBuilder {
+  import scala.collection.mutable.{ArrayBuffer, Buffer, HashMap}
 
   val CHILD_LIST_SIZE = 16
 

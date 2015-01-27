@@ -3,13 +3,13 @@ package common
 
 import org.scalatest.WordSpec
 
-class ParseLineSpec extends WordSpec {
+class ParseLineSpec extends WordSpec with IO {
 
   "The line parser" when {
     "given an empty header" should {
       "reject this argument" in {
         intercept[IllegalArgumentException] {
-          IO.parseLine("")
+          parseLine("")
         }
       }
     }
@@ -17,7 +17,7 @@ class ParseLineSpec extends WordSpec {
     "given a header without PID" should {
       "reject this argument" in {
         intercept[IllegalArgumentException] {
-          IO.parseLine("PPID CMD")
+          parseLine("PPID CMD")
         }
       }
     }
@@ -25,7 +25,7 @@ class ParseLineSpec extends WordSpec {
     "given a header without PPID" should {
       "reject this argument" in {
         intercept[IllegalArgumentException] {
-          IO.parseLine("PID CMD")
+          parseLine("PID CMD")
         }
       }
     }
@@ -33,13 +33,13 @@ class ParseLineSpec extends WordSpec {
     "given a header without CMD" should {
       "reject this argument" in {
         intercept[IllegalArgumentException] {
-          IO.parseLine("PPID PID")
+          parseLine("PPID PID")
         }
       }
     }
 
     "given an simple header" should {
-      val parser = IO.parseLine("PPID PID CMD")
+      val parser = parseLine("PPID PID CMD")
 
       "reject an empty line" in {
         intercept[RuntimeException] {
@@ -60,7 +60,7 @@ class ParseLineSpec extends WordSpec {
     }
 
     "given an complex header" should {
-      val parser = IO.parseLine("i1 PPID i2 PID i3 CMD")
+      val parser = parseLine("i1 PPID i2 PID i3 CMD")
 
       "reject an empty line" in {
         intercept[RuntimeException] {
@@ -81,7 +81,7 @@ class ParseLineSpec extends WordSpec {
     }
 
     "given an actual header" should {
-      val parser = IO.parseLine("  UID   PID  PPID   C STIME   TTY           TIME CMD")
+      val parser = parseLine("  UID   PID  PPID   C STIME   TTY           TIME CMD")
 
       "reject an empty line" in {
         intercept[RuntimeException] {

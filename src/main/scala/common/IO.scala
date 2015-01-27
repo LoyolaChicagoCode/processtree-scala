@@ -6,7 +6,7 @@ import java.io.{BufferedWriter, OutputStreamWriter}
 import scala.collection.JavaConversions.enumerationAsScalaIterator
 import scala.math.max
 
-object IO {
+trait IO {
 
   def parseLine(header: String): (String) => (Int, Int, String) = {
     val cols = new java.util.StringTokenizer(header).toList
