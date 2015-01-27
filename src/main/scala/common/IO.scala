@@ -1,5 +1,4 @@
-package edu.luc.etl.osdi.processtree.scala
-package common
+package edu.luc.etl.osdi.processtree.scala.common
 
 import java.io.{BufferedWriter, OutputStreamWriter}
 

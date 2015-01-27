@@ -1,5 +1,4 @@
-package edu.luc.etl.osdi.processtree.scala
-package common
+package edu.luc.etl.osdi.processtree.scala.common
 
 trait Main extends App with IO with TreeBuilder {
 
