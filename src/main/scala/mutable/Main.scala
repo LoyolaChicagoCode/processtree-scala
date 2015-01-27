@@ -2,6 +2,7 @@ package edu.luc.etl.osdi.processtree.scala
 package mutable
 
 import common._
+import IO._
 
 import scala.collection.mutable.{ArrayBuffer, Buffer, HashMap}
 
@@ -14,7 +15,7 @@ object Main extends App {
   val processTree = Mutable.buildTree(processes)
   val total = System.currentTimeMillis - start
 
-  IO.printTree(processTree)
+  printTree(processTree)
   println("processing time: " + total + " ms")
 }
 

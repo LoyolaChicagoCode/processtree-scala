@@ -2,6 +2,7 @@ package edu.luc.etl.osdi.processtree.scala
 package immutable
 
 import common._
+import IO._
 
 object Main extends App {
   val lines = scala.io.Source.stdin.getLines
@@ -13,7 +14,7 @@ object Main extends App {
   val processTree = Immutable.buildTree(processes)
   val total = System.currentTimeMillis - start
 
-  IO.printTree(processTree)
+  printTree(processTree)
   println("processing time: " + total + " ms")
 }
 
