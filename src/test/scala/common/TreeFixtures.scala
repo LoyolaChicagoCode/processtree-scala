@@ -3,7 +3,7 @@ package common
 
 object TreeFixtures {
 
-  val empty: Map[Int, Seq[(Int, Int, String)]] = Map.empty
+  val empty = Map.empty[Int, Seq[(Int, Int, String)]]
 
   val simple = Map(0 -> Seq((1, 0, "cmd")))
 
