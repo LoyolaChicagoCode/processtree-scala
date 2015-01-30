@@ -7,6 +7,8 @@ import org.scalatest.WordSpec
 
 class PrintSpec extends WordSpec with IO {
 
+  val EOL = System.lineSeparator
+
   def fixture() = new {
     val stringWriter = new StringWriter
     implicit val strout = new BufferedWriter(stringWriter, IO_BUF_SIZE)
@@ -36,7 +38,7 @@ class PrintSpec extends WordSpec with IO {
       "print this tree correctly" in {
         val f = fixture()
         printTree(TreeFixtures.simple)(f.strout)
-        assert(f.stringWriter.toString == "1: cmd\n")
+        assert(f.stringWriter.toString == "1: cmd" + EOL)
       }
     }
 
