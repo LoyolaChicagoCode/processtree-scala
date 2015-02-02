@@ -5,5 +5,5 @@ package edu.luc.etl.osdi.processtree.scala.common
  * PID, PPID, and command string to a map representing a process tree.
  */
 trait TreeBuilder {
-  def buildTree(processes: Iterator[(Int, Int, String)]): Map[Int, Seq[(Int, Int, String)]]
+  def buildTree(processes: Iterator[Process]): ProcessTree
 }

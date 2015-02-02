@@ -1,18 +1,18 @@
 package edu.luc.etl.osdi.processtree.scala
-package immutable
+package groupby
+
+import common.{Process, ProcessTree}
 
 /** A main app that combines the common code with the immutable implementation. */
-object Main extends common.Main with Immutable
+object Main extends common.Main with GroupByTreeBuilder
 
 /**
  * An immutable (purely functional) implementation of a process tree builder.
  * This is not space-efficient because it has to load the entire input into
  * memory before applying the powerful `groupBy` method.
  */
-trait Immutable extends common.TreeBuilder {
-  override def buildTree(processes: Iterator[(Int, Int, String)]):
-  Map[Int, Seq[(Int, Int, String)]] =
+
+trait GroupByTreeBuilder extends common.TreeBuilder {
+  override def buildTree(processes: Iterator[Process]): ProcessTree =
     processes.toSeq groupBy { _._2 }
 }
-
-// TODO rewrite using fold and compare performance

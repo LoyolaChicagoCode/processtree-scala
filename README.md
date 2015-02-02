@@ -32,7 +32,8 @@ To run the tests:
 To run the main methods:
 
     $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.mutable.Main"
-    $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.immutable.Main"
+    $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.groupby.Main"
+    $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.fold.Main"
 
 On Windows, if you installed [Git](http://git-scm.com/) with the recommended
 third option,

@@ -15,7 +15,7 @@ trait IO {
    *
    * @return The function for parsing subsequent lines
    */
-  def parseLine(header: String): (String) => (Int, Int, String) = {
+  def parseLine(header: String): (String) => Process = {
     val cols = new java.util.StringTokenizer(header).toList
     val iPid = cols indexOf "PID"
     val iPpid = cols indexOf "PPID"
@@ -37,17 +37,14 @@ trait IO {
   implicit val stdout = new BufferedWriter(new OutputStreamWriter(System.out), IO_BUF_SIZE)
 
   /** Prints a map representing a process tree. */
-  def printTree
-  (processTree: Map[Int, Seq[(Int, Int, String)]])
-  (implicit out: BufferedWriter)
-  : Unit = {
+  def printTree(processTree: ProcessTree)(implicit out: BufferedWriter): Unit = {
     printTree(processTree, 0, 0)(out)
     out.flush()
   }
 
   /** Recursively prints a map representing a process tree with indentation. */
   def printTree
-  (processTree: Map[Int, Seq[(Int, Int, String)]], pid: Int, indent: Int)
+  (processTree: ProcessTree, pid: Int, indent: Int)
   (implicit out: BufferedWriter)
   : Unit = {
     for (children <- processTree.get(pid); (cpid, _, cmd) <- children) {

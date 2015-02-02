@@ -1,24 +1,25 @@
 package edu.luc.etl.osdi.processtree.scala
 package mutable
 
+import common.{Process, ProcessTree}
+
 /** A main app that combines the common code with the mutable implementation. */
-object Main extends common.Main with Mutable
+object Main extends common.Main with MutableTreeBuilder
 
 /** A mutable (imperative) implementation of a process tree builder. */
-trait Mutable extends common.TreeBuilder {
+trait MutableTreeBuilder extends common.TreeBuilder {
 
   import scala.collection.mutable.{ArrayBuffer, Buffer, HashMap}
 
   val CHILD_LIST_SIZE = 16
 
-  override def buildTree(processes: Iterator[(Int, Int, String)]):
-  Map[Int, scala.Seq[(Int, Int, String)]] = {
-    val treeMap = new HashMap[Int, Buffer[(Int, Int, String)]]
+  override def buildTree(processes: Iterator[Process]): ProcessTree = {
+    val treeMap = new HashMap[Int, Buffer[Process]]
     while (processes.hasNext) {
       val tuple = processes.next()
-      val (pid, ppid, cmd) = tuple
+      val ppid = tuple._2
       if (! treeMap.contains(ppid)) {
-        treeMap += ((ppid, new ArrayBuffer[(Int, Int, String)](CHILD_LIST_SIZE)))
+        treeMap(ppid) = new ArrayBuffer[Process](CHILD_LIST_SIZE)
       }
       treeMap(ppid) += tuple
     }
