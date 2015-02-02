@@ -1,6 +1,7 @@
 package edu.luc.etl.osdi.processtree.scala
 package common
 
+/** Common fixtures across tests. */
 object TreeFixtures {
 
   val empty = Map.empty[Int, Seq[(Int, Int, String)]]

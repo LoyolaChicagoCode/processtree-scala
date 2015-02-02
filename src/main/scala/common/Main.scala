@@ -1,5 +1,6 @@
 package edu.luc.etl.osdi.processtree.scala.common
 
+/** The common main method for the console applications. */
 trait Main extends App with IO with TreeBuilder {
 
   override def main(args: Array[String]): Unit = {

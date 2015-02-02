@@ -3,6 +3,7 @@ package common
 
 import org.scalatest.WordSpec
 
+/** Tests for the `parseLine` method. */
 class ParseLineSpec extends WordSpec with IO {
 
   "The line parser" when {

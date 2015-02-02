@@ -3,6 +3,7 @@ package common
 
 import org.scalatest.WordSpec
 
+/** Tests for the tree-building algorithm. */
 trait TreeBuilderSpec extends WordSpec with TreeBuilder {
 
   "The tree builder" when {

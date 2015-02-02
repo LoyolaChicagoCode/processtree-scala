@@ -1,8 +1,10 @@
 package edu.luc.etl.osdi.processtree.scala
 package mutable
 
+/** A main app that combines the common code with the mutable implementation. */
 object Main extends common.Main with Mutable
 
+/** A mutable (imperative) implementation of a process tree builder. */
 trait Mutable extends common.TreeBuilder {
 
   import scala.collection.mutable.{ArrayBuffer, Buffer, HashMap}

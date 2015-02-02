@@ -5,8 +5,16 @@ import java.io.{BufferedWriter, OutputStreamWriter}
 import scala.collection.JavaConversions.enumerationAsScalaIterator
 import scala.math.max
 
+/** I/O methods for the console applications. */
 trait IO {
 
+  /**
+   * Parses the header row of the output of the ps command
+   * and returns a function that parses subsequent lines
+   * into a triple containing PID, PPID, and command string.
+   *
+   * @return The function for parsing subsequent lines
+   */
   def parseLine(header: String): (String) => (Int, Int, String) = {
     val cols = new java.util.StringTokenizer(header).toList
     val iPid = cols indexOf "PID"
@@ -22,10 +30,13 @@ trait IO {
     }
   }
 
+  /** The buffer size for the output writer. */
   val IO_BUF_SIZE = 8192
 
+  /** A buffered output writer for efficiency. */
   implicit val stdout = new BufferedWriter(new OutputStreamWriter(System.out), IO_BUF_SIZE)
 
+  /** Prints a map representing a process tree. */
   def printTree
   (processTree: Map[Int, Seq[(Int, Int, String)]])
   (implicit out: BufferedWriter)
@@ -34,6 +45,7 @@ trait IO {
     out.flush()
   }
 
+  /** Recursively prints a map representing a process tree with indentation. */
   def printTree
   (processTree: Map[Int, Seq[(Int, Int, String)]], pid: Int, indent: Int)
   (implicit out: BufferedWriter)
