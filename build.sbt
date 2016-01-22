@@ -1,7 +1,9 @@
 name := "processtree-scala"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.11.7"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.3" % Test
+scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 
-ScoverageSbtPlugin.ScoverageKeys.coverageExcludedPackages := """.*\.common\.Main"""
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % Test
+
+coverageExcludedPackages := """.*\.common\.Main"""
