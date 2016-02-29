@@ -15,8 +15,8 @@
 - Scala programming techniques
   - console input
   - [stackable traits](http://www.artima.com/scalazine/articles/stackable_trait_pattern.html)
-- unit testing using [ScalaTest](http://www.scalatest.org)
-- automated performance testing/microbenchmarking using [ScalaMeter](https://scalameter.github.io)
+  - unit testing using [ScalaTest](http://www.scalatest.org)
+  - automated performance testing/microbenchmarking using [ScalaMeter](https://scalameter.github.io)
 
 # Overview
 
