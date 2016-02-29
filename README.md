@@ -15,6 +15,8 @@
 - Scala programming techniques
   - console input
   - [stackable traits](http://www.artima.com/scalazine/articles/stackable_trait_pattern.html)
+  - unit testing using [ScalaTest](http://www.scalatest.org)
+  - automated performance testing/microbenchmarking using [ScalaMeter](https://scalameter.github.io)
 
 # Overview
 
@@ -34,6 +36,12 @@ To run the main methods:
     $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.mutable.Main"
     $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.groupby.Main"
     $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.fold.Main"
+
+To run the benchmarks:
+
+    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.mutable.Benchmark -silent'
+    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.groupby.Benchmark -silent'
+    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.fold.Benchmark -silent'
 
 On Windows, if you installed [Git](http://git-scm.com/) with the recommended
 third option,
