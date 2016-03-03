@@ -43,11 +43,11 @@ To generate larger data sets for testing:
 
 To run the benchmarks:
 
-    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.BenchmarkFold'
-    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.BenchmarkArray'
-    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.mutable.Benchmark -silent'
-    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.groupby.Benchmark -silent'
-    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.fold.Benchmark -silent'
+    $ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.BenchmarkFold"
+    $ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.BenchmarkArray"
+    $ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.mutable.Benchmark"
+    $ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.groupby.Benchmark"
+    $ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.fold.Benchmark"
 
 On Windows, if you installed [Git](http://git-scm.com/) with the recommended
 third option, *Use Git and optional Unix tools from the Windows Command Prompt*,
