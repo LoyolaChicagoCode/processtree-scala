@@ -37,13 +37,18 @@ To run the main methods:
     $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.groupby.Main"
     $ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.fold.Main"
 
+To generate larger data sets for testing:
+
+    $ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.Main 100000" > data.txt
+
 To run the benchmarks:
 
+    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.BenchmarkFold'
+    $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.BenchmarkArray'
     $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.mutable.Benchmark -silent'
     $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.groupby.Benchmark -silent'
     $ sbt 'test:runMain edu.luc.etl.osdi.processtree.scala.fold.Benchmark -silent'
 
 On Windows, if you installed [Git](http://git-scm.com/) with the recommended
-third option,
-*Use Git and optional Unix tools from the Windows Command Prompt*,
+third option, *Use Git and optional Unix tools from the Windows Command Prompt*,
 then you will have a `ps` command available.

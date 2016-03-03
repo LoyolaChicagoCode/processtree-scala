@@ -9,14 +9,16 @@ import org.scalameter.api._
   */
 abstract class Benchmark(label: String) extends Bench.LocalTime with TreeBuilder {
 
-  val sizes: Gen[Int] = Gen.exponential("processes")(100, 1000000, 10)
+  val sizes: Gen[Int] = Gen.exponential("processes")(10, 1000000, 10)
 
-  val inputs: Gen[Iterator[Process]] = sizes map fakeps.fakePs cached
+  /** Inputs cached as (immutable) sequences so we can reuse them. */
+  val inputs: Gen[Seq[Process]] = sizes.map(n => fakeps.fakePs(n).toSeq).cached
 
   performance of label in {
     measure method "buildTree" in {
       using (inputs) in { ps =>
-        buildTree(ps)
+        // need to get a fresh iterator over the cached sequence
+        buildTree(ps.iterator)
       }
     }
   }

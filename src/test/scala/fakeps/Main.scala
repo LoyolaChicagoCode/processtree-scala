@@ -15,7 +15,6 @@ object Main extends App {
     System.exit(1)
   }
 
-  val n = arg.get
   val ps = fakePs(arg.get)
   println("%-10s %-10s %-10s".format("PID", "PPID", "CMD"))
   for ((pid, ppid, cmd) <- ps)

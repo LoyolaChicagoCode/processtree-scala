@@ -17,6 +17,6 @@ trait FoldTreeBuilder extends common.TreeBuilder {
     processes.foldLeft(Map.empty: ProcessTree) { (m, p) =>
       val ppid = p._2
       val children = m.getOrElse(ppid, Vector.empty) :+ p
-      m.updated(ppid, children)
+      m + (ppid -> children)
     }
 }
