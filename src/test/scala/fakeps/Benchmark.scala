@@ -5,7 +5,7 @@ import org.scalameter.api._
 
 object Benchmark extends Bench.LocalTime {
 
-  val sizes: Gen[Int] = Gen.exponential("processes")(10, 10000, 10)
+  val sizes: Gen[Int] = Gen.exponential("processes")(1000, 1000000, 10)
 
   def measureMethod(f: Int => Iterator[(Int, Int)], label: String): Unit =
     measure method label in {
@@ -16,6 +16,9 @@ object Benchmark extends Bench.LocalTime {
 
   measureMethod(fakePsMutable, "fakePsMutable")
   measureMethod(fakePsFold, "fakePsFold")
-  measureMethod(fakePsFoldSlow, "fakePsFoldSlow")
-  measureMethod(fakePsArray, "fakePsFoldArray")
+//  measureMethod(fakePsFoldSlow, "fakePsFoldSlow")
+  measureMethod(fakePsArray, "fakePsArray")
+  measureMethod(fakePsArrayPar, "fakePsArrayPar")
+  measureMethod(fakePsArrayTrie, "fakePsArrayTrie")
+  measureMethod(fakePsArraySTM, "fakePsArraySTM")
 }
