@@ -10,8 +10,8 @@ import scala.util.Try
 object Main extends App {
 
   val arg = Try { args(0).toInt }
-  if (arg.isFailure) {
-    Console.err.println("usage: fakeps n (where n = number of process table entries)")
+  if (arg.isFailure || arg.get < 1) {
+    Console.err.println("usage: fakeps n (where n > 0 = number of process table entries)")
     System.exit(1)
   }
 

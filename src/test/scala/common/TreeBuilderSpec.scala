@@ -4,9 +4,9 @@ package common
 import org.scalatest.WordSpec
 
 /** Tests for the tree-building algorithm. */
-trait TreeBuilderSpec extends WordSpec with TreeBuilder {
+abstract class TreeBuilderSpec(label: String) extends WordSpec with TreeBuilder {
 
-  "The tree builder" when {
+  "The " + label + " tree builder" when {
     "given an empty list of processes" should {
       "build the correct process tree" in {
         assert(buildTree(Iterator.empty) == TreeFixtures.empty)
