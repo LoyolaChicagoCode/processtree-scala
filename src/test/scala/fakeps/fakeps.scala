@@ -4,9 +4,7 @@ import scala.collection.mutable.ArrayBuffer
 import scala.util.Random
 import common.Process
 
-/**
-  * Utility methods for generating a fake list of processes of the specified length.
-  */
+/** Utility methods for generating a fake list of processes of the specified length. */
 package object fakeps {
 
   /**
@@ -15,6 +13,7 @@ package object fakeps {
     * because of a bug in Map.+(vararg).
     */
   def fakePsFoldSlow(n: Int): Iterator[(Int, Int)] = reverseEdges {
+    require { n > 0 }
     (2 to n).foldLeft {
       Map(0 -> Seq(1), 1 -> Seq.empty)
     } { (ps, nextPid) =>
@@ -28,6 +27,7 @@ package object fakeps {
     * using an immutable implementation.
     */
   def fakePsFold(n: Int): Iterator[(Int, Int)] = reverseEdges {
+    require { n > 0 }
     (2 to n).foldLeft {
       Map(0 -> Seq(1), 1 -> Seq.empty)
     } { (ps, nextPid) =>
@@ -41,6 +41,7 @@ package object fakeps {
     * using a mutable implementation.
     */
   def fakePsMutable(n: Int): Iterator[(Int, Int)] = reverseEdges {
+    require { n > 0 }
     import scala.collection.mutable.Map
     val ps = Map(0 -> ArrayBuffer(1), 1 -> ArrayBuffer.empty[Int])
     (2 to n) foreach { nextPid =>
@@ -56,6 +57,7 @@ package object fakeps {
     * using a mutable implementation.
     */
   def fakePsArray(n: Int): Iterator[(Int, Int)] = {
+    require { n > 0 }
     val ps = Vector.fill(n + 1)(ArrayBuffer.empty[Int])
     ps(0) += 1
     (2 to n) foreach { nextPid =>
@@ -71,6 +73,7 @@ package object fakeps {
     * concurrent queue (from Java).
     */
   def fakePsArrayPar(n: Int): Iterator[(Int, Int)] = {
+    require { n > 0 }
     import java.util.concurrent.ConcurrentLinkedQueue
     import scala.collection.JavaConversions._
     val ps = Vector.fill(n + 1)(new ConcurrentLinkedQueue[Int])
@@ -87,6 +90,7 @@ package object fakeps {
     * using a mutable implementation with a parallel range and a lock-free trie.
     */
   def fakePsArrayTrie(n: Int): Iterator[(Int, Int)] = {
+    require { n > 0 }
     import scala.collection.concurrent.TrieMap
     val ps = Vector.fill(n + 1)(TrieMap.empty[Int, Unit])
     ps(0) += (1 -> (()))
@@ -102,6 +106,7 @@ package object fakeps {
     * using a mutable implementation with a parallel range and STM.
     */
   def fakePsArraySTM(n: Int): Iterator[(Int, Int)] = {
+    require { n > 0 }
     import scala.concurrent.stm._
     val ps = Vector.fill(n + 1)(TSet.empty[Int])
     atomic { implicit tx => ps(0) += 1 }
