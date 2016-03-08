@@ -9,7 +9,7 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
-    * using an immutable implementation. Unacceptably slow
+    * using an immutable map. Unacceptably slow
     * because of a bug in Map.+(vararg).
     */
   def fakePsFoldSlow(n: Int): Iterator[(Int, Int)] = reverseEdges {
@@ -24,7 +24,7 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
-    * using an immutable implementation.
+    * using an immutable map.
     */
   def fakePsFold(n: Int): Iterator[(Int, Int)] = reverseEdges {
     require { n > 0 }
@@ -38,7 +38,7 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
-    * using a mutable implementation.
+    * using a mutable map.
     */
   def fakePsMutable(n: Int): Iterator[(Int, Int)] = reverseEdges {
     require { n > 0 }
@@ -54,7 +54,7 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
-    * using a mutable implementation.
+    * using a preallocated immutable vector of mutable array-based lists.
     */
   def fakePsArray(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
@@ -69,8 +69,8 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
-    * using a mutable implementation with a parallel range and a
-    * concurrent queue (from Java).
+    * using a preallocated immutable vector of with a parallel range and
+    * mutable concurrent queues (from Java).
     */
   def fakePsArrayPar(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
@@ -87,7 +87,8 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
-    * using a mutable implementation with a parallel range and a lock-free trie.
+    * using a preallocated immutable vector of with a parallel range and
+    * lock-free tries.
     */
   def fakePsArrayTrie(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
@@ -103,7 +104,8 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
-    * using a mutable implementation with a parallel range and STM.
+    * using a preallocated immutable vector of with a parallel range and
+    * STM-based mutable sets.
     */
   def fakePsArraySTM(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }

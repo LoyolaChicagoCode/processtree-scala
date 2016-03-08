@@ -21,9 +21,9 @@ class Spec extends FunSuite {
         assert(isFlattenedTree(f(s)))
     }
 
-  testFakePs(fakePsMutable, "fakePsMutable")
-  testFakePs(fakePsFold, "fakePsFold")
   testFakePs(fakePsFoldSlow, "fakePsFoldSlow")
+  testFakePs(fakePsFold, "fakePsFold")
+  testFakePs(fakePsMutable, "fakePsMutable")
   testFakePs(fakePsArray, "fakePsArray")
   testFakePs(fakePsArrayPar, "fakePsArrayPar")
   testFakePs(fakePsArrayTrie, "fakePsArrayTrie")
