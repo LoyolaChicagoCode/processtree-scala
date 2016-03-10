@@ -15,8 +15,9 @@ object Benchmark extends Bench.LocalTime {
     }
 
 //  measureMethod(fakePsFoldSlow, "fakePsFoldSlow")
-//  measureMethod(fakePsFold, "fakePsFold")
-//  measureMethod(fakePsMutable, "fakePsMutable")
+  measureMethod(fakePsFold, "fakePsFold")
+  measureMethod(fakePsArrayImmutable, "fakePsArrayImmutable")
+  measureMethod(fakePsMutable, "fakePsMutable")
   measureMethod(fakePsArray, "fakePsArray")
   measureMethod(fakePsArrayPar, "fakePsArrayPar")
   measureMethod(fakePsArrayTrie, "fakePsArrayTrie")

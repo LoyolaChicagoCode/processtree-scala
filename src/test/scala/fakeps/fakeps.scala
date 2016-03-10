@@ -38,6 +38,20 @@ package object fakeps {
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
+    * using a preallocated immutable vector of immutable vectors.
+    */
+  def fakePsArrayImmutable(n: Int): Iterator[(Int, Int)] = {
+    require { n > 0 }
+    val ps0 = Vector.fill(n + 1)(Vector.empty[Int])
+    val ps = (2 to n).foldLeft(ps0.updated(0, Vector(1))) { (ps, nextPid) =>
+      val randomPid = 1 + Random.nextInt(nextPid - 1)
+      ps.updated(randomPid, ps(randomPid) :+ nextPid)
+    }
+    for (ppid <- ps.indices.iterator ; pid <- ps(ppid).iterator) yield (pid, ppid)
+  }
+
+  /**
+    * Generates a barebones process tree (ppid -> pid*) of size n
     * using a mutable map.
     */
   def fakePsMutable(n: Int): Iterator[(Int, Int)] = reverseEdges {
@@ -131,5 +145,5 @@ package object fakeps {
   def addCmd(i: Iterator[(Int, Int)]): Iterator[Process] = addCmd(i, "Fake Process")
 
   /** Generates the fake ps command output. */
-  def fakePs(n: Int) = addCmd(fakePsArraySTM(n))
+  def fakePs(n: Int) = addCmd(fakePsArrayImmutable(n))
 }
