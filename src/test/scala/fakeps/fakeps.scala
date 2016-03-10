@@ -43,7 +43,8 @@ package object fakeps {
   def fakePsArrayImmutable(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
     val ps0 = Vector.fill(n + 1)(Vector.empty[Int])
-    val ps = (2 to n).foldLeft(ps0.updated(0, Vector(1))) { (ps, nextPid) =>
+    val ps1 = ps0.updated(0, Vector(1))
+    val ps = (2 to n).foldLeft(ps1) { (ps, nextPid) =>
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps.updated(randomPid, ps(randomPid) :+ nextPid)
     }
