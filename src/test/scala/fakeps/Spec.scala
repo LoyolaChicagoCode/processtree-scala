@@ -29,4 +29,5 @@ class Spec extends FunSuite {
   testFakePs(fakePsArrayPar, "fakePsArrayPar")
   testFakePs(fakePsArrayTrie, "fakePsArrayTrie")
   testFakePs(fakePsArraySTM, "fakePsArraySTM")
+  testFakePs(fakePsSimpleFast, "fakePsSimpleFast")
 }

@@ -82,6 +82,26 @@ package object fakeps {
     for (ppid <- ps.indices.iterator ; pid <- ps(ppid).iterator) yield (pid, ppid)
   }
 
+//  /**
+//    * Generates a barebones process tree (ppid -> pid*) of size n
+//    * using an immutable map.
+//    */
+//  def fakePsMapReduce(n: Int): Iterator[(Int, Int)] = reverseEdges {
+//    require { n > 0 }
+//    type MultiMap = Map[Int, Iterable[Int]]
+//    def +++(m1: MultiMap, m2: MultiMap): MultiMap =
+//    val ps0 = Map(0 -> Seq(1), 1 -> Seq.empty)
+//    val ps1 = ps0 ++ (2 to n).par map { nextPid => Seq(1 + Random.nextInt(nextPid - 1)) }
+//
+//    (2 to n).foldLeft {
+//
+//    } { (ps, nextPid) =>
+//      val randomPid = 1 + Random.nextInt(nextPid - 1)
+//      ps + (randomPid -> (nextPid +: ps(randomPid))) + (nextPid -> Seq.empty)
+//    }
+//    ps0
+//  }
+
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using a preallocated immutable vector of with a parallel range and
@@ -134,6 +154,15 @@ package object fakeps {
     for (ppid <- ps.indices.iterator ; pid <- ps(ppid).single.iterator) yield (pid, ppid)
   }
 
+  /**
+    * Generates a barebones process tree (ppid -> pid*) of size n
+    * by simply enumerating the edges. This should work in constant space.
+    */
+  def fakePsSimpleFast(n: Int): Iterator[(Int, Int)] = {
+    require { n > 0 }
+    Iterator(1 -> 0) ++ ((2 to n).toIterator map { cpid => cpid -> (1 + Random.nextInt(cpid - 1)) })
+  }
+
   /** Converts a tree (ppid -> pid*) into an iterator of pid -> ppid edges. */
   def reverseEdges(m: Map[Int, Iterable[Int]]): Iterator[(Int, Int)] =
     for (ppid <- m.keys.iterator ; pid <- m(ppid).iterator) yield (pid, ppid)
@@ -146,5 +175,5 @@ package object fakeps {
   def addCmd(i: Iterator[(Int, Int)]): Iterator[Process] = addCmd(i, "Fake Process")
 
   /** Generates the fake ps command output. */
-  def fakePs(n: Int) = addCmd(fakePsArrayImmutable(n))
+  def fakePs(n: Int) = addCmd(fakePsSimpleFast(n))
 }
