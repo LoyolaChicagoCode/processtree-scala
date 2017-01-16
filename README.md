@@ -17,7 +17,7 @@
   - functional, with immutable data structures
 - software design principles
   - [SoC](https://en.wikipedia.org/wiki/Separation_of_concerns) (separation of concerns)
-  - [DRY](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
+  - [DRY](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself) (don't repeat yourself)
   - [testcase superclass](http://xunitpatterns.com/Testcase%20Superclass.html)
 - Scala programming techniques
   - console input
