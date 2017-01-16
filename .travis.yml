@@ -1,4 +1,4 @@
 language: scala
-scala: 2.11.7
-script: sbt coverage test
-after_success: sbt coveralls
+scala: 2.11.8
+script: sbt coverage test coverageReport
+after_success: bash <(curl -s https://codecov.io/bash)

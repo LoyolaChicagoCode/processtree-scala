@@ -9,7 +9,7 @@ object Benchmark extends Bench.LocalTime {
 
   def measureMethod(f: Int => Iterator[(Int, Int)], label: String): Unit =
     measure method label in {
-      using (sizes) in { n =>
+      using(sizes) in { n =>
         f(n)
       }
     }

@@ -1,6 +1,6 @@
 package edu.luc.etl.osdi.processtree.scala.common
 
-import java.io.{BufferedWriter, OutputStreamWriter}
+import java.io.{ BufferedWriter, OutputStreamWriter }
 
 import scala.collection.JavaConversions.enumerationAsScalaIterator
 import scala.math.max
@@ -43,10 +43,7 @@ trait IO {
   }
 
   /** Recursively prints a map representing a process tree with indentation. */
-  def printTree
-  (processTree: ProcessTree, pid: Int, indent: Int)
-  (implicit out: BufferedWriter)
-  : Unit = {
+  def printTree(processTree: ProcessTree, pid: Int, indent: Int)(implicit out: BufferedWriter): Unit = {
     for (children <- processTree.get(pid); (cpid, _, cmd) <- children) {
       for (_ <- 1 to indent) out.append(' ')
       out.append(cpid.toString)

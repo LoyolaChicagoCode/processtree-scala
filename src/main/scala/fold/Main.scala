@@ -1,7 +1,7 @@
 package edu.luc.etl.osdi.processtree.scala
 package fold
 
-import common.{Process, ProcessTree}
+import common.{ Process, ProcessTree }
 
 /** A main app that combines the common code with the mutable implementation. */
 object Main extends common.Main with FoldTreeBuilder
