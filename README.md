@@ -16,7 +16,7 @@
   - OO/imperative, with mutable data structures
   - functional, with immutable data structures
 - software design principles
-  - [Soc](https://en.wikipedia.org/wiki/Separation_of_concerns) (separation of concerns)
+  - [SoC](https://en.wikipedia.org/wiki/Separation_of_concerns) (separation of concerns)
   - [DRY](http://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
   - [testcase superclass](http://xunitpatterns.com/Testcase%20Superclass.html)
 - Scala programming techniques
