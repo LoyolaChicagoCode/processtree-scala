@@ -1,7 +1,7 @@
 package edu.luc.etl.osdi.processtree.scala
 package common
 
-import java.io.{BufferedWriter, StringWriter}
+import java.io.{ BufferedWriter, StringWriter }
 import scala.language.reflectiveCalls
 import org.scalatest.WordSpec
 

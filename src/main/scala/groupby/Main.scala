@@ -1,7 +1,7 @@
 package edu.luc.etl.osdi.processtree.scala
 package groupby
 
-import common.{Process, ProcessTree}
+import common.{ Process, ProcessTree }
 
 /** A main app that combines the common code with the immutable implementation. */
 object Main extends common.Main with GroupByTreeBuilder
