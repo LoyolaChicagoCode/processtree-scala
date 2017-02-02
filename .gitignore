@@ -11,6 +11,7 @@
 # generated files
 bin/
 gen/
+logs/
 proguard_cache/
 target/
 tmp/
@@ -24,7 +25,11 @@ local.properties
 .settings/
 *.iml
 .idea/
+local.sbt
 
 # Emacs files
 *~
 \#*\#
+
+# Mac files
+.DS_Store
