@@ -1,6 +1,6 @@
 package edu.luc.etl.osdi.processtree.scala.common
 
-import java.io.{ BufferedWriter, OutputStreamWriter }
+import java.io.{BufferedWriter, OutputStreamWriter}
 
 import scala.collection.JavaConversions.enumerationAsScalaIterator
 import scala.math.max
@@ -9,12 +9,12 @@ import scala.math.max
 trait IO {
 
   /**
-   * Parses the header row of the output of the ps command
-   * and returns a function that parses subsequent lines
-   * into a triple containing PID, PPID, and command string.
-   *
-   * @return The function for parsing subsequent lines
-   */
+    * Parses the header row of the output of the ps command
+    * and returns a function that parses subsequent lines
+    * into a triple containing PID, PPID, and command string.
+    *
+    * @return The function for parsing subsequent lines
+    */
   def parseLine(header: String): (String) => Process = {
     val cols = new java.util.StringTokenizer(header).toList
     val iPid = cols indexOf "PID"

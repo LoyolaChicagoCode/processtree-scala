@@ -4,9 +4,9 @@ package fakeps
 import scala.util.Try
 
 /**
- * Main method to generate a fake list of processes of the specified length.
- * Also exposes its utility methods for testing/benchmarking.
- */
+  * Main method to generate a fake list of processes of the specified length.
+  * Also exposes its utility methods for testing/benchmarking.
+  */
 object Main extends App {
 
   val arg = Try { args(0).toInt }
