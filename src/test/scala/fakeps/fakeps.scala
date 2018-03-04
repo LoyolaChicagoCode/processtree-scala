@@ -113,14 +113,14 @@ package object fakeps {
   def fakePsArrayPar(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
     import java.util.concurrent.ConcurrentLinkedQueue
-    import scala.collection.JavaConversions._
+    import scala.collection.JavaConverters._
     val ps = Vector.fill(n + 1)(new ConcurrentLinkedQueue[Int])
     ps(0) add 1
     (2 to n).par foreach { nextPid =>
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps(randomPid) add nextPid
     }
-    for (ppid <- ps.indices.iterator; pid <- ps(ppid).iterator) yield (pid, ppid)
+    for (ppid <- ps.indices.iterator; pid <- ps(ppid).iterator.asScala) yield (pid, ppid)
   }
 
   /**
