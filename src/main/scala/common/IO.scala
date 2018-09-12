@@ -2,7 +2,6 @@ package edu.luc.etl.osdi.processtree.scala.common
 
 import java.io.{BufferedWriter, OutputStreamWriter}
 
-import scala.collection.JavaConversions.enumerationAsScalaIterator
 import scala.math.max
 
 /** I/O methods for the console applications. */
@@ -16,7 +15,7 @@ trait IO {
     * @return The function for parsing subsequent lines
     */
   def parseLine(header: String): (String) => Process = {
-    val cols = new java.util.StringTokenizer(header).toList
+    val cols = header.trim.split("\\s+")
     val iPid = cols indexOf "PID"
     val iPpid = cols indexOf "PPID"
     val iCmd = max(header indexOf "CMD", header indexOf "COMMAND")
