@@ -3,8 +3,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b3584cb7773b4a1e8e951bde126482e7)](https://www.codacy.com/app/laufer/processtree-scala?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LoyolaChicagoCode/processtree-scala&amp;utm_campaign=Badge_Grade)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
-[![Issue Stats](http://issuestats.com/github/LoyolaChicagoCode/processtree-scala/badge/pr)](http://issuestats.com/github/LoyolaChicagoCode/processtree-scala)
-[![Issue Stats](http://issuestats.com/github/LoyolaChicagoCode/processtree-scala/badge/issue)](http://issuestats.com/github/LoyolaChicagoCode/processtree-scala)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/LoyolaChicagoCode/processtree-scala.svg)](http://isitmaintained.com/project/LoyolaChicagoCode/processtree-scala "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/LoyolaChicagoCode/processtree-scala.svg)](http://isitmaintained.com/project/LoyolaChicagoCode/processtree-scala "Percentage of issues still open")
 
