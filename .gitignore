@@ -33,4 +33,7 @@ local.sbt
 
 # Mac files
 .DS_Store
-project/build.properties
+
+# SBT configuration files
+# remove if specific version of SBT is required
+project/build.properties 
