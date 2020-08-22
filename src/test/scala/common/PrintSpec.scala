@@ -3,10 +3,10 @@ package common
 
 import java.io.{BufferedWriter, StringWriter}
 import scala.language.reflectiveCalls
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 /** Tests for the `printTree` method. */
-class PrintSpec extends WordSpec with IO {
+class PrintSpec extends AnyWordSpec with IO {
 
   val EOL = System.lineSeparator
 

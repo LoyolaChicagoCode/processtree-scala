@@ -1,10 +1,10 @@
 package edu.luc.etl.osdi.processtree.scala
 package common
 
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 /** Tests for the `parseLine` method. */
-class ParseLineSpec extends WordSpec with IO {
+class ParseLineSpec extends AnyWordSpec with IO {
 
   "The line parser" when {
     "given an empty header" should {

@@ -1,10 +1,10 @@
 package edu.luc.etl.osdi.processtree.scala
 package common
 
-import org.scalatest.WordSpec
+import org.scalatest.wordspec.AnyWordSpec
 
 /** Tests for the tree-building algorithm. */
-abstract class TreeBuilderSpec(label: String) extends WordSpec with TreeBuilder {
+abstract class TreeBuilderSpec(label: String) extends AnyWordSpec with TreeBuilder {
 
   "The " + label + " tree builder" when {
     "given an empty list of processes" should {

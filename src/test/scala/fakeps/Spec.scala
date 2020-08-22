@@ -1,10 +1,10 @@
 package edu.luc.etl.osdi.processtree.scala
 package fakeps
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 /** Tests for the fakeps algorithms. */
-class Spec extends FunSuite {
+class Spec extends AnyFunSuite {
 
   val sizes = Seq(10, 100, 1000, 10000)
 
