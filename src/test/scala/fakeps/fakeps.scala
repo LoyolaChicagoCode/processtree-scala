@@ -1,7 +1,8 @@
 package edu.luc.etl.osdi.processtree.scala
 
 import scala.collection.mutable.ArrayBuffer
-import scala.collection.GenIterable
+import scala.collection.parallel.immutable.ParRange
+import scala.collection.parallel.ParSeq
 import scala.util.Random
 import common.Process
 
@@ -100,8 +101,8 @@ package object fakeps {
     */
   def fakePsMapReducePar(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
-    val ps1 = (2 to n).par map { nextPid => (1 + Random.nextInt(nextPid - 1), nextPid) }
-    val ps2 = (Seq((0, 1)).par ++ ps1) groupBy { _._1 }
+    val ps1 = new ParRange(2 to n) map { nextPid => (1 + Random.nextInt(nextPid - 1), nextPid) }
+    val ps2 = (ParSeq((0, 1)) ++ ps1) groupBy { _._1 }
     for (ppid <- ps2.keys.iterator; (_, pid) <- ps2(ppid).iterator) yield (pid, ppid)
   }
 
@@ -113,10 +114,10 @@ package object fakeps {
   def fakePsArrayPar(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
     import java.util.concurrent.ConcurrentLinkedQueue
-    import scala.collection.JavaConverters._
+    import scala.jdk.CollectionConverters._
     val ps = Vector.fill(n + 1)(new ConcurrentLinkedQueue[Int])
     ps(0) add 1
-    (2 to n).par foreach { nextPid =>
+    new ParRange(2 to n) foreach { nextPid =>
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps(randomPid) add nextPid
     }
@@ -133,7 +134,7 @@ package object fakeps {
     import scala.collection.concurrent.TrieMap
     val ps = Vector.fill(n + 1)(TrieMap.empty[Int, Unit])
     ps(0) += (1 -> (()))
-    (2 to n).par foreach { nextPid =>
+    new ParRange(2 to n) foreach { nextPid =>
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps(randomPid) += (nextPid -> (()))
     }
@@ -150,7 +151,7 @@ package object fakeps {
     import scala.concurrent.stm._
     val ps = Vector.fill(n + 1)(TSet.empty[Int])
     atomic { implicit tx => ps(0) += 1 }
-    (2 to n).par foreach { nextPid =>
+    new ParRange(2 to n) foreach { nextPid =>
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       atomic { implicit tx => ps(randomPid) += nextPid }
     }
@@ -163,11 +164,11 @@ package object fakeps {
     */
   def fakePsSimpleFast(n: Int): Iterator[(Int, Int)] = {
     require { n > 0 }
-    Iterator(1 -> 0) ++ ((2 to n).toIterator map { cpid => cpid -> (1 + Random.nextInt(cpid - 1)) })
+    Iterator(1 -> 0) ++ ((2 to n).iterator map { cpid => cpid -> (1 + Random.nextInt(cpid - 1)) })
   }
 
   /** Converts a tree (ppid -> pid*) into an iterator of pid -> ppid edges. */
-  def reverseEdges(m: Map[Int, GenIterable[Int]]): Iterator[(Int, Int)] =
+  def reverseEdges(m: Map[Int, Iterable[Int]]): Iterator[(Int, Int)] =
     for (ppid <- m.keys.iterator; pid <- m(ppid).iterator) yield (pid, ppid)
 
   /** Adds a command string to each pid -> ppid edge. */
