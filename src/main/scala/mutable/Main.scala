@@ -9,15 +9,15 @@ object Main extends common.Main with MutableTreeBuilder
 /** A mutable (imperative) implementation of a process tree builder. */
 trait MutableTreeBuilder extends common.TreeBuilder {
 
-  import scala.collection.mutable.{Buffer, HashMap, ListBuffer}
+  import scala.collection.mutable.{ListBuffer, HashMap}
 
   override def buildTree(processes: Iterator[Process]): ProcessTree = {
-    val treeMap = new HashMap[Int, Buffer[Process]]
+    val treeMap = new HashMap[Int, ListBuffer[Process]]
     while (processes.hasNext) {
       val tuple = processes.next()
       val ppid = tuple._2
       if (!treeMap.contains(ppid)) {
-        treeMap(ppid) = new ListBuffer[Process]
+        treeMap(ppid) = ListBuffer.empty[Process]
       }
       treeMap(ppid) += tuple
     }
