@@ -14,5 +14,5 @@ object Main extends common.Main with GroupByTreeBuilder
 
 trait GroupByTreeBuilder extends common.TreeBuilder {
   override def buildTree(processes: Iterator[Process]): ProcessTree =
-    processes.toSeq groupBy { _._2 }
+    processes.toSeq groupBy { p => p._2 }
 }

@@ -18,3 +18,5 @@ parallelExecution in Test := false
 logBuffered := false
 
 coverageExcludedPackages := """.*\.common\.Main"""
+
+enablePlugins(JavaAppPackaging)

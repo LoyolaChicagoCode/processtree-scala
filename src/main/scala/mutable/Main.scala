@@ -17,7 +17,7 @@ trait MutableTreeBuilder extends common.TreeBuilder {
       val tuple = processes.next()
       val ppid = tuple._2
       if (!treeMap.contains(ppid)) {
-        treeMap(ppid) = ListBuffer.empty[Process]
+        treeMap(ppid) = ListBuffer.empty
       }
       treeMap(ppid) += tuple
     }
