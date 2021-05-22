@@ -15,7 +15,6 @@ logs/
 proguard_cache/
 target/
 tmp/
-benchmarks.txt
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -27,6 +26,12 @@ local.properties
 .idea/
 local.sbt
 .bsp/
+.bloop/
+.metals/
+.vscode/
+project/.bloop/
+project/metals.sbt
+project/project/
 
 # Emacs files
 *~
