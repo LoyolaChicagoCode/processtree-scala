@@ -10,13 +10,13 @@ import scala.util.Try
 object Main extends App {
 
   val arg = Try { args(0).toInt }
-  if (arg.isFailure || arg.get < 1) {
+  if arg.isFailure || arg.get < 1 then {
     Console.err.println("usage: fakeps n (where n > 0 = number of process table entries)")
     System.exit(1)
   }
 
   val ps = fakePs(arg.get)
   println("%-10s %-10s %-10s".format("PID", "PPID", "CMD"))
-  for ((pid, ppid, cmd) <- ps)
+  for (pid, ppid, cmd) <- ps do
     println("%-10s %-10s %s".format(pid, ppid, cmd))
 }

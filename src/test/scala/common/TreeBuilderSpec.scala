@@ -6,6 +6,8 @@ import org.scalatest.wordspec.AnyWordSpec
 /** Tests for the tree-building algorithm. */
 abstract class TreeBuilderSpec(label: String) extends AnyWordSpec with TreeBuilder {
 
+  given CanEqual[ProcessTree, ProcessTree] = CanEqual.derived
+
   "The " + label + " tree builder" when {
     "given an empty list of processes" should {
       "build the correct process tree" in {

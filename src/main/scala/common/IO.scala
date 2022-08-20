@@ -15,7 +15,7 @@ trait IO {
     * @return The function for parsing subsequent lines
     */
   def parseLine(header: String): (String) => Process = {
-    val cols = header.trim.split("\\s+")
+    val cols = header.trim.nn.split("\\s+").nn // allow to fail at runtime if Null anywhere
     val iPid = cols indexOf "PID"
     val iPpid = cols indexOf "PPID"
     val iCmd = max(header indexOf "CMD", header indexOf "COMMAND")
@@ -25,7 +25,7 @@ trait IO {
     (line: String) => {
       val sTok = new java.util.StringTokenizer(line)
       val words = (0 to max(iPid, iPpid)).map(_ => sTok.nextToken())
-      (words(iPid).toInt, words(iPpid).toInt, line.substring(iCmd))
+      (words(iPid).nn.toInt, words(iPpid).nn.toInt, line.substring(iCmd).nn)
     }
   }
 
@@ -33,23 +33,23 @@ trait IO {
   val IO_BUF_SIZE = 8192
 
   /** A buffered output writer for efficiency. */
-  implicit val stdout = new BufferedWriter(new OutputStreamWriter(System.out), IO_BUF_SIZE)
+  given stdout: BufferedWriter = new BufferedWriter(new OutputStreamWriter(System.out), IO_BUF_SIZE)
 
   /** Prints a map representing a process tree. */
-  def printTree(processTree: ProcessTree)(implicit out: BufferedWriter): Unit = {
-    printTree(processTree, 0, 0)(out)
+  def printTree(processTree: ProcessTree)(using out: BufferedWriter): Unit = {
+    printTree(processTree, 0, 0)
     out.flush()
   }
 
   /** Recursively prints a map representing a process tree with indentation. */
-  def printTree(processTree: ProcessTree, pid: Int, indent: Int)(implicit out: BufferedWriter): Unit = {
-    for (children <- processTree.get(pid); (cpid, _, cmd) <- children) {
-      for (_ <- 1 to indent) out.append(' ')
+  def printTree(processTree: ProcessTree, pid: Int, indent: Int)(using out: BufferedWriter): Unit = {
+    for children <- processTree.get(pid); (cpid, _, cmd) <- children do {
+      for _ <- 1 to indent do out.append(' ')
       out.append(cpid.toString)
       out.append(": ")
       out.append(cmd)
       out.newLine()
-      printTree(processTree, cpid, indent + 1)(out)
+      printTree(processTree, cpid, indent + 1)
     }
   }
 }

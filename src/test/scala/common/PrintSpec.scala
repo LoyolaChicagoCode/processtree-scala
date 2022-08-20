@@ -2,7 +2,6 @@ package edu.luc.etl.osdi.processtree.scala
 package common
 
 import java.io.{BufferedWriter, StringWriter}
-import scala.language.reflectiveCalls
 import org.scalatest.wordspec.AnyWordSpec
 
 /** Tests for the `printTree` method. */
@@ -10,18 +9,18 @@ class PrintSpec extends AnyWordSpec with IO {
 
   val EOL = System.lineSeparator
 
-  def fixture() = new {
-    val stringWriter = new StringWriter
-    implicit val strout = new BufferedWriter(stringWriter, IO_BUF_SIZE)
-  }
+  def swToBw(sw: StringWriter) = new BufferedWriter(sw, IO_BUF_SIZE)
+
+  def fixture() = new StringWriter
 
   "The string writer" when {
     "when used through a buffered writer" should {
       "return the output as a string" in {
         val f = fixture()
-        f.strout.append("asdf")
-        f.strout.flush()
-        assert(f.stringWriter.toString == "asdf")
+        val bw = swToBw(f)
+        bw.append("asdf")
+        bw.flush()
+        assert(f.toString == "asdf")
       }
     }
   }
@@ -30,24 +29,27 @@ class PrintSpec extends AnyWordSpec with IO {
     "given an empty tree" should {
       "print this tree correctly" in {
         val f = fixture()
-        printTree(TreeFixtures.empty)(f.strout)
-        assert(f.stringWriter.toString == "")
+        given BufferedWriter = swToBw(f)
+        printTree(TreeFixtures.empty)
+        assert(f.toString == "")
       }
     }
 
     "given a simple tree" should {
       "print this tree correctly" in {
         val f = fixture()
-        printTree(TreeFixtures.simple)(f.strout)
-        assert(f.stringWriter.toString == "1: cmd" + EOL)
+        given BufferedWriter = swToBw(f)
+        printTree(TreeFixtures.simple)
+        assert(f.toString == "1: cmd" + EOL)
       }
     }
 
     "given a complex tree" should {
       "print this tree correctly" in {
         val f = fixture()
-        printTree(TreeFixtures.complex)(f.strout)
-        assert(f.stringWriter.toString ==
+        given BufferedWriter = swToBw(f)
+        printTree(TreeFixtures.complex)
+        assert(f.toString ==
           """|1: cmd1
              | 2: cmd2
              | 3: cmd3

@@ -17,7 +17,7 @@ class Spec extends AnyFunSuite {
 
   def testFakePs(f: FakePS, label: String): Unit =
     test(label + " should return a proper flattened ps tree") {
-      for (s <- sizes)
+      for s <- sizes do
         assert(isFlattenedTree(f(s)))
     }
 
@@ -30,6 +30,5 @@ class Spec extends AnyFunSuite {
   testFakePs(fakePsMapReducePar, "fakePsMapReducePar")
   testFakePs(fakePsArrayPar, "fakePsArrayPar")
   testFakePs(fakePsArrayTrie, "fakePsArrayTrie")
-  testFakePs(fakePsArraySTM, "fakePsArraySTM")
   testFakePs(fakePsSimpleFast, "fakePsSimpleFast")
 }

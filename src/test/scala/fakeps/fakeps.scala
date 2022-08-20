@@ -20,7 +20,7 @@ package object fakeps {
       Map(0 -> Seq(1), 1 -> Seq.empty)
     } { (ps, nextPid) =>
       val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps + (randomPid -> (nextPid +: ps(randomPid)), nextPid -> Seq.empty)
+      ps + (randomPid -> (nextPid +: ps(randomPid))) + (nextPid -> Seq.empty)
     }
   }
 
@@ -50,7 +50,7 @@ package object fakeps {
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps.updated(randomPid, ps(randomPid) :+ nextPid)
     }
-    for (ppid <- ps.indices.iterator; pid <- ps(ppid).iterator) yield (pid, ppid)
+    for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator yield (pid, ppid)
   }
 
   /**
@@ -81,7 +81,7 @@ package object fakeps {
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps(randomPid) += nextPid
     }
-    for (ppid <- ps.indices.iterator; pid <- ps(ppid).iterator) yield (pid, ppid)
+    for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator yield (pid, ppid)
   }
 
   /**
@@ -92,7 +92,7 @@ package object fakeps {
     require { n > 0 }
     val ps1 = (2 to n) map { nextPid => (1 + Random.nextInt(nextPid - 1), nextPid) }
     val ps2 = (Seq((0, 1)) ++ ps1) groupBy { _._1 }
-    for (ppid <- ps2.keys.iterator; (_, pid) <- ps2(ppid).iterator) yield (pid, ppid)
+    for ppid <- ps2.keys.iterator; (_, pid) <- ps2(ppid).iterator yield (pid, ppid)
   }
 
   /**
@@ -103,7 +103,7 @@ package object fakeps {
     require { n > 0 }
     val ps1 = new ParRange(2 to n) map { nextPid => (1 + Random.nextInt(nextPid - 1), nextPid) }
     val ps2 = (ParSeq((0, 1)) ++ ps1) groupBy { _._1 }
-    for (ppid <- ps2.keys.iterator; (_, pid) <- ps2(ppid).iterator) yield (pid, ppid)
+    for ppid <- ps2.keys.iterator; (_, pid) <- ps2(ppid).iterator yield (pid, ppid)
   }
 
   /**
@@ -121,7 +121,7 @@ package object fakeps {
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps(randomPid) add nextPid
     }
-    for (ppid <- ps.indices.iterator; pid <- ps(ppid).iterator.asScala) yield (pid, ppid)
+    for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator.nn.asScala yield (pid, ppid)
   }
 
   /**
@@ -138,24 +138,7 @@ package object fakeps {
       val randomPid = 1 + Random.nextInt(nextPid - 1)
       ps(randomPid) += (nextPid -> (()))
     }
-    for (ppid <- ps.indices.iterator; (pid, _) <- ps(ppid).iterator) yield (pid, ppid)
-  }
-
-  /**
-    * Generates a barebones process tree (ppid -> pid*) of size n
-    * using a preallocated immutable vector of with a parallel range and
-    * STM-based mutable sets.
-    */
-  def fakePsArraySTM(n: Int): Iterator[(Int, Int)] = {
-    require { n > 0 }
-    import scala.concurrent.stm._
-    val ps = Vector.fill(n + 1)(TSet.empty[Int])
-    atomic { implicit tx => ps(0) += 1 }
-    new ParRange(2 to n) foreach { nextPid =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      atomic { implicit tx => ps(randomPid) += nextPid }
-    }
-    for (ppid <- ps.indices.iterator; pid <- ps(ppid).single.iterator) yield (pid, ppid)
+    for ppid <- ps.indices.iterator; (pid, _) <- ps(ppid).iterator yield (pid, ppid)
   }
 
   /**
@@ -169,7 +152,7 @@ package object fakeps {
 
   /** Converts a tree (ppid -> pid*) into an iterator of pid -> ppid edges. */
   def reverseEdges(m: Map[Int, Iterable[Int]]): Iterator[(Int, Int)] =
-    for (ppid <- m.keys.iterator; pid <- m(ppid).iterator) yield (pid, ppid)
+    for ppid <- m.keys.iterator; pid <- m(ppid).iterator yield (pid, ppid)
 
   /** Adds a command string to each pid -> ppid edge. */
   def addCmd(i: Iterator[(Int, Int)], s: String): Iterator[Process] =

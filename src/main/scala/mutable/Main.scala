@@ -13,10 +13,10 @@ trait MutableTreeBuilder extends common.TreeBuilder {
 
   override def buildTree(processes: Iterator[Process]): ProcessTree = {
     val treeMap = new HashMap[Int, ListBuffer[Process]]
-    while (processes.hasNext) {
+    while processes.hasNext do {
       val tuple = processes.next()
       val ppid = tuple._2
-      if (!treeMap.contains(ppid)) {
+      if !treeMap.contains(ppid) then {
         treeMap(ppid) = ListBuffer.empty
       }
       treeMap(ppid) += tuple
