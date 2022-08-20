@@ -1,2 +1,2 @@
-addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.7.5")
-addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "1.8.2")
+addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.9.11")
+addSbtPlugin("org.scoverage" %% "sbt-scoverage" % "2.0.2")
