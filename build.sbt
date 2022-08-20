@@ -1,15 +1,13 @@
 name := "processtree-scala"
 
-version := "0.2"
+version := "1.0"
 
-scalaVersion := "2.13.8"
+scalaVersion := "3.1.3"
 
-scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
+scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Yexplicit-nulls", "-language:strictEquality")
 
 libraryDependencies ++= Seq(
   "org.scalatest"     %% "scalatest"  % "3.2.13"   % Test,
-  "com.storm-enroute" %% "scalameter" % "0.21"    % Test,
-  "org.scala-stm"     %% "scala-stm"  % "0.11.1"  % Test,
   "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4" % Test
 )
 
@@ -20,3 +18,5 @@ logBuffered := false
 coverageExcludedPackages := """.*\.common\.Main"""
 
 enablePlugins(JavaAppPackaging)
+
+scalacOptions ++= Seq("-rewrite", "-new-syntax")
