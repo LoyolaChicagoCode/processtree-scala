@@ -2,7 +2,7 @@ package edu.luc.etl.osdi.processtree.scala
 package common
 
 /** Common fixtures across tests. */
-object TreeFixtures {
+object TreeFixtures:
 
   val empty = Map.empty[Int, Seq[(Int, Int, String)]]
 
@@ -13,4 +13,5 @@ object TreeFixtures {
     1 -> Seq((2, 1, "cmd2"), (3, 1, "cmd3")),
     3 -> Seq((4, 3, "cmd4"))
   )
-}
+
+end TreeFixtures

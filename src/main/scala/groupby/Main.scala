@@ -12,7 +12,7 @@ object Main extends common.Main with GroupByTreeBuilder
   * memory before applying the powerful `groupBy` method.
   */
 
-trait GroupByTreeBuilder extends common.TreeBuilder {
+trait GroupByTreeBuilder extends common.TreeBuilder:
   override def buildTree(processes: Iterator[Process]): ProcessTree =
     processes.toSeq groupBy { p => p._2 }
-}
+end GroupByTreeBuilder

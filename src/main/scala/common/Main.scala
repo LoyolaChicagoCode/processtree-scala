@@ -1,7 +1,7 @@
 package edu.luc.etl.osdi.processtree.scala.common
 
 /** The common main method for the console applications. */
-trait Main extends App with IO with TreeBuilder {
+trait Main extends App with IO with TreeBuilder:
   val lines = scala.io.Source.stdin.getLines()
   val header = lines.next()
   val parse = parseLine(header)
@@ -13,4 +13,4 @@ trait Main extends App with IO with TreeBuilder {
 
   printTree(processTree)
   println("processing time: " + total + " ms")
-}
+end Main

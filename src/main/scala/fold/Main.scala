@@ -11,12 +11,11 @@ object Main extends common.Main with FoldTreeBuilder
   * based on `foldLeft`. This is more space-efficient than groupBy because
   * it can work directly on consecutive items of the iterator.
   */
-trait FoldTreeBuilder extends common.TreeBuilder {
-
+trait FoldTreeBuilder extends common.TreeBuilder:
   override def buildTree(processes: Iterator[Process]): ProcessTree =
     processes.foldLeft(Map.empty: ProcessTree) { (m, p) =>
       val ppid = p._2
       val children = m.getOrElse(ppid, Vector.empty) :+ p
       m + (ppid -> children)
     }
-}
+end FoldTreeBuilder

@@ -7,7 +7,7 @@ import scala.util.Random
 import common.Process
 
 /** Utility methods for generating a fake list of processes of the specified length. */
-package object fakeps {
+package object fakeps:
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
@@ -42,7 +42,7 @@ package object fakeps {
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using a preallocated immutable vector of immutable vectors.
     */
-  def fakePsArrayImmutable(n: Int): Iterator[(Int, Int)] = {
+  def fakePsArrayImmutable(n: Int): Iterator[(Int, Int)] =
     require { n > 0 }
     val ps0 = Vector.fill(n + 1)(Vector.empty[Int])
     val ps1 = ps0.updated(0, Vector(1))
@@ -51,7 +51,6 @@ package object fakeps {
       ps.updated(randomPid, ps(randomPid) :+ nextPid)
     }
     for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator yield (pid, ppid)
-  }
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
@@ -73,7 +72,7 @@ package object fakeps {
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using a preallocated immutable vector of mutable array-based lists.
     */
-  def fakePsArray(n: Int): Iterator[(Int, Int)] = {
+  def fakePsArray(n: Int): Iterator[(Int, Int)] =
     require { n > 0 }
     val ps = Vector.fill(n + 1)(ArrayBuffer.empty[Int])
     ps(0) += 1
@@ -82,36 +81,33 @@ package object fakeps {
       ps(randomPid) += nextPid
     }
     for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator yield (pid, ppid)
-  }
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using map-reduce over sequential collections.
     */
-  def fakePsMapReduce(n: Int): Iterator[(Int, Int)] = {
+  def fakePsMapReduce(n: Int): Iterator[(Int, Int)] =
     require { n > 0 }
     val ps1 = (2 to n) map { nextPid => (1 + Random.nextInt(nextPid - 1), nextPid) }
     val ps2 = (Seq((0, 1)) ++ ps1) groupBy { _._1 }
     for ppid <- ps2.keys.iterator; (_, pid) <- ps2(ppid).iterator yield (pid, ppid)
-  }
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using map-reduce over parallel collections.
     */
-  def fakePsMapReducePar(n: Int): Iterator[(Int, Int)] = {
+  def fakePsMapReducePar(n: Int): Iterator[(Int, Int)] =
     require { n > 0 }
     val ps1 = new ParRange(2 to n) map { nextPid => (1 + Random.nextInt(nextPid - 1), nextPid) }
     val ps2 = (ParSeq((0, 1)) ++ ps1) groupBy { _._1 }
     for ppid <- ps2.keys.iterator; (_, pid) <- ps2(ppid).iterator yield (pid, ppid)
-  }
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using a preallocated immutable vector of with a parallel range and
     * mutable concurrent queues (from Java).
     */
-  def fakePsArrayPar(n: Int): Iterator[(Int, Int)] = {
+  def fakePsArrayPar(n: Int): Iterator[(Int, Int)] =
     require { n > 0 }
     import java.util.concurrent.ConcurrentLinkedQueue
     import scala.jdk.CollectionConverters._
@@ -122,14 +118,13 @@ package object fakeps {
       ps(randomPid) add nextPid
     }
     for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator.nn.asScala yield (pid, ppid)
-  }
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using a preallocated immutable vector of with a parallel range and
     * lock-free tries.
     */
-  def fakePsArrayTrie(n: Int): Iterator[(Int, Int)] = {
+  def fakePsArrayTrie(n: Int): Iterator[(Int, Int)] =
     require { n > 0 }
     import scala.collection.concurrent.TrieMap
     val ps = Vector.fill(n + 1)(TrieMap.empty[Int, Unit])
@@ -139,16 +134,14 @@ package object fakeps {
       ps(randomPid) += (nextPid -> (()))
     }
     for ppid <- ps.indices.iterator; (pid, _) <- ps(ppid).iterator yield (pid, ppid)
-  }
 
   /**
     * Simply enumerates the child-parent edges of a barebones process tree (ppid -> pid*)
     * of size n. This should work in constant space.
     */
-  def fakePsSimpleFast(n: Int): Iterator[(Int, Int)] = {
+  def fakePsSimpleFast(n: Int): Iterator[(Int, Int)] =
     require { n > 0 }
     Iterator(1 -> 0) ++ ((2 to n).iterator map { cpid => cpid -> (1 + Random.nextInt(cpid - 1)) })
-  }
 
   /** Converts a tree (ppid -> pid*) into an iterator of pid -> ppid edges. */
   def reverseEdges(m: Map[Int, Iterable[Int]]): Iterator[(Int, Int)] =
@@ -163,4 +156,5 @@ package object fakeps {
 
   /** Generates the fake ps command output. */
   def fakePs(n: Int) = addCmd(fakePsMapReduce(n))
-}
+
+end fakeps

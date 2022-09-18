@@ -4,7 +4,7 @@ package common
 import org.scalatest.wordspec.AnyWordSpec
 
 /** Tests for the tree-building algorithm. */
-abstract class TreeBuilderSpec(label: String) extends AnyWordSpec with TreeBuilder {
+abstract class TreeBuilderSpec(label: String) extends AnyWordSpec with TreeBuilder:
 
   given CanEqual[ProcessTree, ProcessTree] = CanEqual.derived
 
@@ -31,4 +31,5 @@ abstract class TreeBuilderSpec(label: String) extends AnyWordSpec with TreeBuild
       }
     }
   }
-}
+
+end TreeBuilderSpec

@@ -4,7 +4,7 @@ package common
 import org.scalatest.wordspec.AnyWordSpec
 
 /** Tests for the `parseLine` method. */
-class ParseLineSpec extends AnyWordSpec with IO {
+class ParseLineSpec extends AnyWordSpec with IO:
 
   "The line parser" when {
     "given an empty header" should {
@@ -101,4 +101,5 @@ class ParseLineSpec extends AnyWordSpec with IO {
       }
     }
   }
-}
+
+end ParseLineSpec

@@ -5,7 +5,7 @@ import java.io.{BufferedWriter, StringWriter}
 import org.scalatest.wordspec.AnyWordSpec
 
 /** Tests for the `printTree` method. */
-class PrintSpec extends AnyWordSpec with IO {
+class PrintSpec extends AnyWordSpec with IO:
 
   val EOL = System.lineSeparator
 
@@ -58,4 +58,5 @@ class PrintSpec extends AnyWordSpec with IO {
       }
     }
   }
-}
+
+end PrintSpec
