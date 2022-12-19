@@ -1,4 +1,4 @@
-package edu.luc.etl.osdi.processtree.scala
+package edu.luc.etl.osdi.processtree.scala.common
 
 import scala.collection.Seq
 
@@ -6,10 +6,6 @@ import scala.collection.Seq
 // i.e. why scala.Seq or scala.collection.immutable.Seq doesn't work
 
 /** Common type aliases. */
-package object common:
+type Process = (Int, Int, String)
 
-  type Process = (Int, Int, String)
-
-  type ProcessTree = Map[Int, Seq[Process]]
-
-end common
+type ProcessTree = Map[Int, Seq[Process]]
