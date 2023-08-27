@@ -2,7 +2,7 @@ name := "processtree-scala"
 
 version := "1.0"
 
-scalaVersion := "3.2.1"
+scalaVersion := "3.3.0"
 
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Yexplicit-nulls", "-Ysafe-init", "-language:strictEquality")
 
