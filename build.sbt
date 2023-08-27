@@ -7,7 +7,7 @@ scalaVersion := "3.2.1"
 scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Yexplicit-nulls", "-Ysafe-init", "-language:strictEquality")
 
 libraryDependencies ++= Seq(
-  "org.scalatest"     %% "scalatest"  % "3.2.14"   % Test,
+  "org.scalatest"     %% "scalatest"  % "3.2.16"   % Test,
   "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4" % Test
 )
 
