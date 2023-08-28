@@ -4,11 +4,11 @@ version := "1.0"
 
 scalaVersion := "3.3.0"
 
-scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked", "-Yexplicit-nulls", "-Ysafe-init", "-language:strictEquality")
+scalacOptions += "@.scalacOptions.txt"
 
 libraryDependencies ++= Seq(
-  "org.scalatest"     %% "scalatest"  % "3.2.16"   % Test,
-  "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4" % Test
+  "org.scalatest"          %% "scalatest"                  % "3.2.16" % Test,
+  "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4"  % Test
 )
 
 Test / parallelExecution := false

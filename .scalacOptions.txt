@@ -1,0 +1,7 @@
+-deprecation
+-feature
+-unchecked
+-Wvalue-discard
+-language:strictEquality
+-Yexplicit-nulls
+-Ysafe-init
