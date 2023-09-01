@@ -1,6 +1,6 @@
 [![Scala CI](https://github.com/lucproglangcourse/processtree-scala/actions/workflows/scala.yml/badge.svg)](https://github.com/lucproglangcourse/processtree-scala/actions/workflows/scala.yml)
 [![codecov](https://codecov.io/gh/LoyolaChicagoCode/processtree-scala/branch/master/graph/badge.svg)](https://codecov.io/gh/LoyolaChicagoCode/processtree-scala)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e1a75747962b4c45aef938df10e3e1da)](https://www.codacy.com/gh/LoyolaChicagoCode/processtree-scala/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=LoyolaChicagoCode/processtree-scala&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e1a75747962b4c45aef938df10e3e1da)](https://app.codacy.com/gh/LoyolaChicagoCode/processtree-scala/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/LoyolaChicagoCode/processtree-scala.svg)](http://isitmaintained.com/project/LoyolaChicagoCode/processtree-scala "Average time to resolve an issue")
