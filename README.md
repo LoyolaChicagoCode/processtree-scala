@@ -32,7 +32,7 @@ from the course
 [COMP 374/410: Introduction to Operating
 Systems](http://osdi.etl.luc.edu).
 
-In short, this program converts a flat list of current processes, as printed by the `ps` command
+In short, this program converts a flat list of current processes (showing process ID, parent process ID, etc.), as printed by the `ps` command
 
 ```
 > ps -ef
