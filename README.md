@@ -82,27 +82,24 @@ To run the tests:
 $ sbt test
 ```
 
-To run the main methods:
+To run the main methods, let's first generate the wrapper scripts:
 
 ```
-$ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.mutable.Main"
-$ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.groupby.Main"
-$ ps -ef | sbt "runMain edu.luc.etl.osdi.processtree.scala.fold.Main"
+$ sbt stage
+```
+
+Now we can run the various main methods:
+
+```
+$ ps -ef | ./target/universal/stage/bin/edu_luc_etl_osdi_processtree_scala_mutable_main
+$ ps -ef | ./target/universal/stage/bin/edu_luc_etl_osdi_processtree_scala_groupby_main
+$ ps -ef | ./target/universal/stage/bin/edu_luc_etl_osdi_processtree_scala_fold_main
 ```
 
 To generate larger data sets for testing:
 
 ```
-$ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.Main 100000" > data.txt
-```
-
-To run the benchmarks:
-
-```
-$ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.fakeps.Benchmark"
-$ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.mutable.Benchmark"
-$ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.groupby.Benchmark"
-$ sbt "test:runMain edu.luc.etl.osdi.processtree.scala.fold.Benchmark"
+$ ./target/universal/stage/bin/edu_luc_etl_osdi_processtree_scala_fakeps_main 100000" > data.txt
 ```
 
 On Windows, if you installed [Git](http://git-scm.com/) with the recommended
