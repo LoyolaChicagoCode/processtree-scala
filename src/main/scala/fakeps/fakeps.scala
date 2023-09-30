@@ -14,29 +14,23 @@ package object fakeps:
     * using an immutable map. Unacceptably slow
     * because of a bug in Map.+(vararg).
     */
-  def fakePsFoldSlow(n: Int): Iterator[(Int, Int)] = reverseEdges {
+  def fakePsFoldSlow(n: Int): Iterator[(Int, Int)] = reverseEdges:
     require { n > 0 }
-    (2 to n).foldLeft {
-      Map(0 -> Seq(1), 1 -> Seq.empty)
-    } { (ps, nextPid) =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps + (randomPid -> (nextPid +: ps(randomPid))) + (nextPid -> Seq.empty)
-    }
-  }
+    (2 to n).foldLeft(Map(0 -> Seq(1), 1 -> Seq.empty)):
+      (ps, nextPid) =>
+        val randomPid = 1 + Random.nextInt(nextPid - 1)
+        ps + (randomPid -> (nextPid +: ps(randomPid))) + (nextPid -> Seq.empty)
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using an immutable map.
     */
-  def fakePsFold(n: Int): Iterator[(Int, Int)] = reverseEdges {
+  def fakePsFold(n: Int): Iterator[(Int, Int)] = reverseEdges:
     require { n > 0 }
-    (2 to n).foldLeft {
-      Map(0 -> Seq(1), 1 -> Seq.empty)
-    } { (ps, nextPid) =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps + (randomPid -> (nextPid +: ps(randomPid))) + (nextPid -> Seq.empty)
-    }
-  }
+    (2 to n).foldLeft(Map(0 -> Seq(1), 1 -> Seq.empty)):
+      (ps, nextPid) =>
+        val randomPid = 1 + Random.nextInt(nextPid - 1)
+        ps + (randomPid -> (nextPid +: ps(randomPid))) + (nextPid -> Seq.empty)
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
@@ -46,27 +40,26 @@ package object fakeps:
     require { n > 0 }
     val ps0 = Vector.fill(n + 1)(Vector.empty[Int])
     val ps1 = ps0.updated(0, Vector(1))
-    val ps = (2 to n).foldLeft(ps1) { (ps, nextPid) =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps.updated(randomPid, ps(randomPid) :+ nextPid)
-    }
+    val ps = (2 to n).foldLeft(ps1):
+      (ps, nextPid) =>
+        val randomPid = 1 + Random.nextInt(nextPid - 1)
+        ps.updated(randomPid, ps(randomPid) :+ nextPid)
     for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator yield (pid, ppid)
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
     * using a mutable map.
     */
-  def fakePsMutable(n: Int): Iterator[(Int, Int)] = reverseEdges {
+  def fakePsMutable(n: Int): Iterator[(Int, Int)] = reverseEdges:
     require { n > 0 }
     import scala.collection.mutable.Map
     val ps = Map(0 -> ArrayBuffer(1), 1 -> ArrayBuffer.empty[Int])
-    (2 to n) foreach { nextPid =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps(nextPid) = ArrayBuffer.empty
-      ps(randomPid) += nextPid
-    }
+    (2 to n).foreach:
+      nextPid =>
+        val randomPid = 1 + Random.nextInt(nextPid - 1)
+        ps(nextPid) = ArrayBuffer.empty
+        ps(randomPid) += nextPid
     ps.toMap
-  }
 
   /**
     * Generates a barebones process tree (ppid -> pid*) of size n
@@ -76,10 +69,10 @@ package object fakeps:
     require { n > 0 }
     val ps = Vector.fill(n + 1)(ArrayBuffer.empty[Int])
     ps(0) += 1
-    (2 to n) foreach { nextPid =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps(randomPid) += nextPid
-    }
+    (2 to n).foreach:
+      nextPid =>
+        val randomPid = 1 + Random.nextInt(nextPid - 1)
+        ps(randomPid) += nextPid
     for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator yield (pid, ppid)
 
   /**
@@ -113,10 +106,10 @@ package object fakeps:
     import scala.jdk.CollectionConverters._
     val ps = Vector.fill(n + 1)(new ConcurrentLinkedQueue[Int])
     ps(0) add 1
-    new ParRange(2 to n) foreach { nextPid =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps(randomPid) add nextPid
-    }
+    new ParRange(2 to n) foreach:
+      nextPid =>
+        val randomPid = 1 + Random.nextInt(nextPid - 1)
+        ps(randomPid) add nextPid
     for ppid <- ps.indices.iterator; pid <- ps(ppid).iterator.nn.asScala yield (pid, ppid)
 
   /**
@@ -129,10 +122,10 @@ package object fakeps:
     import scala.collection.concurrent.TrieMap
     val ps = Vector.fill(n + 1)(TrieMap.empty[Int, Unit])
     ps(0) += (1 -> (()))
-    new ParRange(2 to n) foreach { nextPid =>
-      val randomPid = 1 + Random.nextInt(nextPid - 1)
-      ps(randomPid) += (nextPid -> (()))
-    }
+    new ParRange(2 to n) foreach:
+      nextPid =>
+        val randomPid = 1 + Random.nextInt(nextPid - 1)
+        ps(randomPid) += (nextPid -> (()))
     for ppid <- ps.indices.iterator; (pid, _) <- ps(ppid).iterator yield (pid, ppid)
 
   /**

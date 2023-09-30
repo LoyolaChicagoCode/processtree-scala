@@ -13,9 +13,10 @@ object Main extends common.Main with FoldTreeBuilder
   */
 trait FoldTreeBuilder extends common.TreeBuilder:
   override def buildTree(processes: Iterator[Process]): ProcessTree =
-    processes.foldLeft(Map.empty: ProcessTree) { (m, p) =>
-      val ppid = p._2
-      val children = m.getOrElse(ppid, Vector.empty) :+ p
-      m + (ppid -> children)
-    }
+    processes.foldLeft(Map.empty: ProcessTree):
+      (m, p) =>
+        val ppid = p._2
+        val children = m.getOrElse(ppid, Vector.empty) :+ p
+        m + (ppid -> children)
+
 end FoldTreeBuilder

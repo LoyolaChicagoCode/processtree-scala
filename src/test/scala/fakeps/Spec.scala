@@ -15,10 +15,9 @@ class Spec extends AnyFunSuite:
     (ps.get(1) == Some(0)) && (ps - 1).values.forall(ps.contains(_))
 
   def testFakePs(f: FakePS, label: String): Unit =
-    test(label + " should return a proper flattened ps tree") {
+    test(label + " should return a proper flattened ps tree"):
       for s <- sizes do
         assert(isFlattenedTree(f(s)))
-    }
 
   testFakePs(fakePsFoldSlow, "fakePsFoldSlow")
   testFakePs(fakePsFold, "fakePsFold")

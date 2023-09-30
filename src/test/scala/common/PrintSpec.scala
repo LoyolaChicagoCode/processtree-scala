@@ -13,39 +13,32 @@ class PrintSpec extends AnyWordSpec with IO:
 
   def fixture() = new StringWriter
 
-  "The string writer" when {
-    "when used through a buffered writer" should {
-      "return the output as a string" in {
+  "The string writer" when:
+    "when used through a buffered writer" should:
+      "return the output as a string" in:
         val f = fixture()
         val bw = swToBw(f)
         bw.append("asdf")
         bw.flush()
         assert(f.toString == "asdf")
-      }
-    }
-  }
 
-  "The tree printer" when {
-    "given an empty tree" should {
-      "print this tree correctly" in {
+  "The tree printer" when:
+    "given an empty tree" should:
+      "print this tree correctly" in:
         val f = fixture()
         given BufferedWriter = swToBw(f)
         printTree(TreeFixtures.empty)
         assert(f.toString == "")
-      }
-    }
 
-    "given a simple tree" should {
-      "print this tree correctly" in {
+    "given a simple tree" should:
+      "print this tree correctly" in:
         val f = fixture()
         given BufferedWriter = swToBw(f)
         printTree(TreeFixtures.simple)
         assert(f.toString == "1: cmd" + EOL)
-      }
-    }
 
-    "given a complex tree" should {
-      "print this tree correctly" in {
+    "given a complex tree" should:
+      "print this tree correctly" in:
         val f = fixture()
         given BufferedWriter = swToBw(f)
         printTree(TreeFixtures.complex)
@@ -55,8 +48,5 @@ class PrintSpec extends AnyWordSpec with IO:
              | 3: cmd3
              |  4: cmd4
              |""".stripMargin)
-      }
-    }
-  }
 
 end PrintSpec

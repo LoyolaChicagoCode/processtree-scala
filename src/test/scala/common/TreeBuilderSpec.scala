@@ -8,28 +8,21 @@ abstract class TreeBuilderSpec(label: String) extends AnyWordSpec with TreeBuild
 
   given CanEqual[ProcessTree, ProcessTree] = CanEqual.derived
 
-  "The " + label + " tree builder" when {
-    "given an empty list of processes" should {
-      "build the correct process tree" in {
+  "The " + label + " tree builder" when:
+    "given an empty list of processes" should:
+      "build the correct process tree" in:
         assert(buildTree(Iterator.empty) == TreeFixtures.empty)
-      }
-    }
 
-    "given a simple list of processes" should {
-      "build the correct process tree" in {
+    "given a simple list of processes" should:
+      "build the correct process tree" in:
         val processes = Iterator((1, 0, "cmd"))
         assert(buildTree(processes) == TreeFixtures.simple)
-      }
-    }
 
-    "given a complex list of processes" should {
-      "build the correct process tree" in {
+    "given a complex list of processes" should:
+      "build the correct process tree" in:
         val processes = Iterator(
           (1, 0, "cmd1"), (2, 1, "cmd2"), (3, 1, "cmd3"), (4, 3, "cmd4")
         )
         assert(buildTree(processes) == TreeFixtures.complex)
-      }
-    }
-  }
 
 end TreeBuilderSpec
